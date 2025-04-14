@@ -9,6 +9,9 @@ import ScrollToTop from './components/ScrollToTop'; // Optional
 import NotFound from './pages/NotFound';
 import { CartProvider } from './components/CartContext'; // ✅ CartProvider import
 import CartPage from './pages/CartPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} /> 
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
         <Footer />
