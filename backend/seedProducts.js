@@ -1,3 +1,4 @@
+// Your seed script with added productNumber
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const { Product } = require('./models/productModel.js');
@@ -29,6 +30,7 @@ const seedProducts = async () => {
       price: 29.99,
       image: 'https://picsum.photos/200?random=1',
       stock: 50,
+      productNumber: 'P001',
     },
     {
       name: 'Mechanical Keyboard',
@@ -36,6 +38,7 @@ const seedProducts = async () => {
       price: 69.99,
       image: 'https://picsum.photos/200?random=2',
       stock: 30,
+      productNumber: 'P002',
     },
     {
       name: 'Gaming Headset',
@@ -43,6 +46,7 @@ const seedProducts = async () => {
       price: 49.99,
       image: 'https://picsum.photos/200?random=3',
       stock: 20,
+      productNumber: 'P003',
     },
     {
       name: 'Webcam HD',
@@ -50,6 +54,7 @@ const seedProducts = async () => {
       price: 39.99,
       image: 'https://picsum.photos/200?random=4',
       stock: 25,
+      productNumber: 'P004',
     },
     {
       name: 'USB-C Hub',
@@ -57,6 +62,7 @@ const seedProducts = async () => {
       price: 34.99,
       image: 'https://picsum.photos/200?random=5',
       stock: 40,
+      productNumber: 'P005',
     },
     {
       name: 'Laptop Stand',
@@ -64,6 +70,7 @@ const seedProducts = async () => {
       price: 24.99,
       image: 'https://picsum.photos/200?random=6',
       stock: 35,
+      productNumber: 'P006',
     },
     {
       name: 'External SSD',
@@ -71,6 +78,7 @@ const seedProducts = async () => {
       price: 119.99,
       image: 'https://picsum.photos/200?random=7',
       stock: 15,
+      productNumber: 'P007',
     },
     {
       name: 'Bluetooth Speaker',
@@ -78,6 +86,7 @@ const seedProducts = async () => {
       price: 44.99,
       image: 'https://picsum.photos/200?random=8',
       stock: 22,
+      productNumber: 'P008',
     },
     {
       name: 'Smartphone Charger',
@@ -85,6 +94,7 @@ const seedProducts = async () => {
       price: 14.99,
       image: 'https://picsum.photos/200?random=9',
       stock: 60,
+      productNumber: 'P009',
     },
     {
       name: 'Wireless Earbuds',
@@ -92,6 +102,7 @@ const seedProducts = async () => {
       price: 59.99,
       image: 'https://picsum.photos/200?random=10',
       stock: 18,
+      productNumber: 'P010',
     },
   ];
 

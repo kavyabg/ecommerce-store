@@ -1,7 +1,8 @@
+// backend/routes/productRoutes.js
 const express = require('express');
 const {
   getAllProducts,
-  getProductById,
+  getProductByProductNumber,  // Changed to handle productNumber
   createProduct,
   updateProduct,
   deleteProduct
@@ -11,7 +12,7 @@ const router = express.Router();
 
 router.get('/', getAllProducts);
 router.post('/', createProduct);
-router.get('/:id', getProductById);
+router.get('/product/:productNumber', getProductByProductNumber);  // Use the correct route for productNumber
 router.put('/:id', updateProduct);
 router.delete('/:id', deleteProduct);
 

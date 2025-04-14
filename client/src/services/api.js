@@ -1,5 +1,4 @@
-// api.js
-
+// services/api.js
 const BASE_URL = 'http://localhost:5000/api/products';
 
 export const fetchProducts = async () => {
@@ -8,8 +7,8 @@ export const fetchProducts = async () => {
   return data;
 };
 
-export const fetchProductById = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`);
+export const fetchProductByProductNumber = async (productNumber) => {
+  const response = await fetch(`${BASE_URL}/product/${productNumber}`);
   const data = await response.json();
   return data;
 };

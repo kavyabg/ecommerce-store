@@ -33,12 +33,6 @@ function Home() {
         <ProductList products={products} />
       </section>
 
-      {/* Footer */}
-      <footer className="bg-blue-900 text-white py-8">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2025 Ecommerce Store. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

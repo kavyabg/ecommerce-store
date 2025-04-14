@@ -1,3 +1,4 @@
+// backend/controllers/productController.js
 const { Product } = require('../models/productModel');
 
 const getAllProducts = async (req, res) => {
@@ -5,8 +6,8 @@ const getAllProducts = async (req, res) => {
   res.json(products);
 };
 
-const getProductById = async (req, res) => {
-  const product = await Product.findById(req.params.id);
+const getProductByProductNumber = async (req, res) => {  // Changed to handle productNumber
+  const product = await Product.findOne({ productNumber: req.params.productNumber });
   if (!product) return res.status(404).json({ message: 'Product not found' });
   res.json(product);
 };
@@ -31,7 +32,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   getAllProducts,
-  getProductById,
+  getProductByProductNumber,  // Export the updated method
   createProduct,
   updateProduct,
   deleteProduct
