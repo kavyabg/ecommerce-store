@@ -6,7 +6,7 @@ function Header() {
   const { cartItems } = useCart(); // Get cartItems from CartContext
 
   // Calculate cart count (total number of items)
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartCount = cartItems.length;
 
   return (
     <header className="bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-lg">
