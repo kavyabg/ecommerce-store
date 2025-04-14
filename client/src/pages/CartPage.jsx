@@ -3,9 +3,8 @@ import { useCart } from '../components/CartContext';
 import { Link } from 'react-router-dom';
 
 function CartPage() {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
-  // Calculate total price
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
@@ -34,8 +33,22 @@ function CartPage() {
                 />
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800">{item.name}</h2>
-                  <p className="text-gray-600">Qty: {item.quantity}</p>
-                  <p className="text-gray-800 font-medium">${item.price}</p>
+                  <div className="flex items-center space-x-3 mt-2">
+                    <button
+                      onClick={() => decreaseQuantity(item.productNumber)}
+                      className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+                    >
+                      −
+                    </button>
+                    <span className="text-lg">{item.quantity}</span>
+                    <button
+                      onClick={() => increaseQuantity(item.productNumber)}
+                      className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p className="mt-2 text-gray-800 font-medium">${item.price}</p>
                 </div>
               </div>
               <button
