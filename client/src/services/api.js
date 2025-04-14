@@ -1,12 +1,15 @@
+// api.js
+
+const BASE_URL = 'http://localhost:5000/api/products';
+
 export const fetchProducts = async () => {
-    const response = await fetch('https://api.example.com/products');
-    const data = await response.json();
-    return data;
-  };
-  
-  export const fetchProductById = async (id) => {
-    const response = await fetch(`https://api.example.com/products/${id}`);
-    const data = await response.json();
-    return data;
-  };
-  
+  const response = await fetch(BASE_URL);
+  const data = await response.json();
+  return data;
+};
+
+export const fetchProductById = async (id) => {
+  const response = await fetch(`${BASE_URL}/${id}`);
+  const data = await response.json();
+  return data;
+};
