@@ -1,10 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct'; // Custom hook
+import { useCart } from '../components/CartContext';
 
 function ProductDetail() {
   const { productNumber } = useParams();
   const { product, loading, error } = useProduct(productNumber);
+  const { addToCart, cartItems } = useCart();
+
+  const isInCart = cartItems?.some(item => item.productNumber === product?.productNumber);
 
   if (loading) {
     return (
@@ -46,9 +50,29 @@ function ProductDetail() {
           <p className="text-gray-600 text-base leading-relaxed">{product.description}</p>
           <div className="text-2xl font-semibold text-blue-700">${product.price}</div>
 
-          <button className="mt-4 bg-yellow-500 text-blue-900 py-3 px-6 rounded-full text-lg font-medium hover:bg-yellow-400 transition duration-300">
-            Add to Cart
-          </button>
+          {isInCart ? (
+            <>
+              <button
+                disabled
+                className="mt-4 bg-green-500 text-white py-3 px-6 rounded-full text-lg font-medium cursor-not-allowed"
+              >
+                Already in Cart
+              </button>
+              <Link
+                to="/cart"
+                className="ml-4 inline-block mt-4 text-blue-600 hover:underline text-lg font-medium"
+              >
+                View Cart
+              </Link>
+            </>
+          ) : (
+            <button
+              className="mt-4 bg-yellow-500 text-blue-900 py-3 px-6 rounded-full text-lg font-medium hover:bg-yellow-400 transition duration-300"
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>
