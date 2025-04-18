@@ -14,12 +14,12 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };
-
+  
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
   };
-
+  
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}

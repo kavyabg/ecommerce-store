@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
-import { FiShoppingCart } from 'react-icons/fi';
+import { FaCartShopping } from "react-icons/fa6";
 import { FaBluesky } from "react-icons/fa6";
 
 function Header() {
@@ -62,11 +62,11 @@ function Header() {
               to="/cart"
               className="text-white text-2xl hover:text-yellow-300 transition"
             >
-              <FiShoppingCart size={28} />
+              <FaCartShopping size={28} />
             </Link>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
-                {cartCount}
+              <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">
+              {cartCount}
               </span>
             )}
           </div>
