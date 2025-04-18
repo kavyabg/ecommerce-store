@@ -8,15 +8,16 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import NotFound from './pages/NotFound';
 import { CartProvider } from './components/CartContext';
-import { AuthProvider } from './components/AuthContext'; // ✅ Import AuthProvider
+import { AuthProvider } from './components/AuthContext';
 import CartPage from './pages/CartPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute'; // ✅ import it
 
 function App() {
   return (
-    <AuthProvider> {/* ✅ Wrap everything inside AuthProvider */}
+    <AuthProvider>
       <CartProvider>
         <Router>
           <ScrollToTop />
@@ -30,7 +31,14 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </main>
           <Footer />
