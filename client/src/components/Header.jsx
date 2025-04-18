@@ -1,61 +1,76 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../components/CartContext'; // Import useCart hook
+import { useCart } from '../components/CartContext';
+import { FiShoppingCart } from 'react-icons/fi';
+import { FaBluesky } from "react-icons/fa6";
 
 function Header() {
-  const { cartItems } = useCart(); // Get cartItems from CartContext
-
-  // Calculate cart count (total number of items)
+  const { cartItems } = useCart();
   const cartCount = cartItems.length;
 
   return (
-    <header className="bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-lg">
-      <div className="max-w-6xl mx-auto flex justify-between items-center p-6">
-        {/* Logo */}
-        <div className="flex items-center space-x-4">
-          <Link to="/" className="font-bold text-3xl text-white hover:text-yellow-500 transition duration-300">
-            <span className="text-4xl">🔌</span> BlossomBeauty-Shop
-          </Link>
+    <header className="bg-gradient-to-r from-blue-700 to-blue-500 text-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <Link
+              to="/"
+              className="flex items-center text-2xl sm:text-3xl font-extrabold text-white hover:text-yellow-300 transition duration-300"
+            >
+              <FaBluesky className="mr-2 text-5xl sm:text-4xl text-yellow-400" /> BlossomBeauty
+            </Link>
+          </div>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex space-x-6 items-center">
+            <Link
+              to="/"
+              className="text-base font-semibold hover:text-yellow-300 transition"
+            >
+              Home
+            </Link>
+            <Link
+              to="/admin"
+              className="text-base font-semibold hover:text-yellow-300 transition"
+            >
+              Admin
+            </Link>
+            <Link
+              to="/dashboard"
+              className="text-base font-semibold hover:text-yellow-300 transition"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/login"
+              className="text-base font-semibold hover:text-yellow-300 transition"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="text-base font-semibold hover:text-yellow-300 transition"
+            >
+              Register
+            </Link>
+          </nav>
+
+          {/* Cart */}
+          <div className="relative">
+            <Link
+              to="/cart"
+              className="text-white text-2xl hover:text-yellow-300 transition"
+            >
+              <FiShoppingCart size={28} />
+            </Link>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </div>
         </div>
-
-        {/* Navigation */}
-        <nav>
-          <ul className="flex space-x-6">
-            <li>
-              <Link
-                to="/"
-                className="text-lg font-medium text-white hover:text-yellow-500 transition duration-300"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin"
-                className="text-lg font-medium text-white hover:text-yellow-500 transition duration-300"
-              >
-                Admin Dashboard
-              </Link>
-            </li>
-            {/* Add more links as needed */}
-          </ul>
-        </nav>
-
-        {/* Cart Icon */}
-        <div className="relative">
-  <Link
-    to="/cart"
-    className="text-white text-lg hover:text-yellow-500 transition duration-300"
-  >
-    🛒
-  </Link>
-  {cartCount > 0 && (
-    <span className="absolute top-[-8px] right-[-8px] bg-red-500 text-white text-xs rounded-full p-1 min-w-[20px] text-center">
-      {cartCount}
-    </span>
-  )}
-</div>
-
       </div>
     </header>
   );
