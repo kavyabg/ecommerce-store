@@ -22,7 +22,7 @@ A modern and responsive eCommerce web application built with **React**, **Redux 
 - **Frontend**: React, React Router, Tailwind CSS
 - **State Management**: Redux Toolkit
 - **Authentication**: Custom AuthContext / Redux Slice
-- **Backend**: (Optional) Node.js / Express or PHP + MySQL
+- **Backend**: Node.js / Express + MongoDB
 
 ---
 
