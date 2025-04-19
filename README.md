@@ -26,6 +26,13 @@ A modern and responsive eCommerce web application built with **React**, **Redux 
 
 ---
 
+![image](https://github.com/user-attachments/assets/ad174383-41fb-4bc2-9c0a-605cfff48a48)
+![image](https://github.com/user-attachments/assets/ea81c7b9-5fe7-440e-804a-e776cace710f)
+![image](https://github.com/user-attachments/assets/74150131-fee3-4db5-97dd-52663dfcce50)
+![image](https://github.com/user-attachments/assets/a735ae44-e9a3-42a2-bba6-146f1dc86727)
+
+---
+
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
@@ -47,4 +54,4 @@ npm install
 node server.js
 
 Make sure your frontend is pointing to the correct backend API base URL like:
-http://localhost:5000/api
+http://localhost:5000/api 
