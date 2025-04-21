@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import { CartProvider } from './components/CartContext';
 import { AuthProvider } from './components/AuthContext';
 import CartPage from './pages/CartPage';
+import Checkout from './components/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -29,6 +30,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route

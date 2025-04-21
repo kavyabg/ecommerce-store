@@ -10,7 +10,9 @@ function CartPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold mb-10">Cart Items <span className="text-blue-800">({cartItems.length})</span></h1>
+      <h1 className="text-4xl font-bold mb-10">
+        Cart Items <span className="text-blue-800">({cartItems.length})</span>
+      </h1>
 
       {cartItems.length === 0 ? (
         <div className="text-center">
@@ -37,7 +39,6 @@ function CartPage() {
                   <div>
                     <h2 className="text-xl font-semibold">{item.name}</h2>
                     <p className="text-sm text-green-600 mt-1">In Stock</p>
-                    <p className="text-sm text-gray-500">Order Multiple: 1</p>
                     <div className="flex items-center mt-2 space-x-2">
                       <button
                         onClick={() => decreaseQuantity(item.productNumber)}
@@ -52,7 +53,7 @@ function CartPage() {
                   </div>
                 </div>
                 <div className="mt-4 md:mt-0 flex justify-between md:flex-col items-end space-y-2">
-                  <p className="text-lg font-semibold text-gray-800"><span>$</span>{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-lg font-semibold text-gray-800">₹{(item.price * item.quantity).toFixed(2)}</p>
                   <button
                     onClick={() => removeFromCart(item.productNumber)}
                     className="text-red-600 hover:text-yellow-500 text-sm flex items-center"
@@ -69,7 +70,7 @@ function CartPage() {
             <h3 className="text-xl font-bold">Your Order</h3>
             <div className="flex justify-between text-gray-700">
               <span>Subtotal</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-gray-700">
               <span>Tax</span>
@@ -77,15 +78,16 @@ function CartPage() {
             </div>
             <div className="flex justify-between font-bold text-xl border-t pt-4">
               <span>Total</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
 
             <Link
               to="/checkout"
-              className="block bg-yellow-400 text-center font-semibold py-3 rounded transition"
+              className="block w-full bg-yellow-400 text-center font-semibold py-3 rounded hover:bg-yellow-300"
             >
-              Checkout
+              Proceed to Checkout
             </Link>
+
             <Link
               to="/"
               className="block text-center text-blue-600 font-medium"

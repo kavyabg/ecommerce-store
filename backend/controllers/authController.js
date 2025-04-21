@@ -1,11 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/userModel'); // Ensure path is correct and file uses CommonJS
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET is not defined in .env');
-}
-
-
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '1d',
