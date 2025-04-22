@@ -31,7 +31,7 @@ function Header() {
               Home
             </Link>
             <Link
-              to="/admin"
+              to="/admin/login"
               className="text-base font-semibold hover:text-yellow-300 transition"
             >
               Admin

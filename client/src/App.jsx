@@ -13,6 +13,7 @@ import CartPage from './pages/CartPage';
 import Checkout from './components/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminLogin from './components/AdminLogin';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute'; // ✅ import it
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/product/:productNumber" element={<ProductDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<Checkout />} />
