@@ -24,7 +24,7 @@ function ProductList({ products }) {
             </Link>
             <p className="text-gray-500 text-sm">{product.description}</p>
             <div className="mt-4 flex justify-between items-center">
-              <span className="text-xl text-gray-800 font-bold">${product.price}</span>
+              <span className="text-xl text-gray-800 font-bold">₹{product.price}</span>
               <Link to={`/product/${product.productNumber}`}>
               <button className="bg-yellow-500 text-blue-900 py-2 px-4 rounded-full hover:bg-yellow-400 transition duration-300">
                 View Details

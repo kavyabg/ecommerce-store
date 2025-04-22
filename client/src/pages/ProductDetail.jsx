@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useProduct } from '../hooks/useProduct'; // Custom hook
+import { useProduct } from '../hooks/useProduct';
 import { useCart } from '../components/CartContext';
+import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
 
 function ProductDetail() {
   const { productNumber } = useParams();
@@ -12,16 +13,15 @@ function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white shadow-xl rounded-xl p-6 animate-pulse">
-          <div className="w-full h-[400px] bg-gray-200 rounded-lg"></div>
-
-          <div className="space-y-6">
-            <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+      <div className="max-w-6xl mx-auto px-4 py-10 animate-pulse">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white shadow-2xl rounded-2xl p-8">
+          <div className="w-full h-[400px] bg-gray-200 rounded-xl"></div>
+          <div className="space-y-5">
+            <div className="h-10 bg-gray-200 rounded w-2/3"></div>
             <div className="h-5 bg-gray-200 rounded w-full"></div>
             <div className="h-5 bg-gray-200 rounded w-5/6"></div>
-            <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-            <div className="h-12 bg-gray-300 rounded w-1/2"></div>
+            <div className="h-10 bg-gray-300 rounded w-1/2"></div>
+            <div className="h-12 bg-gray-300 rounded w-1/3"></div>
           </div>
         </div>
       </div>
@@ -31,49 +31,68 @@ function ProductDetail() {
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-red-600 text-lg font-medium">{error}</p>
+        <p className="text-red-600 text-xl font-semibold">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white shadow-xl rounded-xl p-6">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-[400px] object-cover rounded-lg shadow-md"
-        />
-
-        <div className="space-y-6">
-          <h2 className="text-3xl font-bold text-gray-800">{product.name}</h2>
-          <p className="text-gray-600 text-base leading-relaxed">{product.description}</p>
-          <div className="text-2xl font-semibold text-blue-700">${product.price}</div>
-
-          {isInCart ? (
-            <>
-              <button
-                disabled
-                className="mt-4 bg-green-500 text-white py-3 px-6 rounded-full text-lg font-medium cursor-not-allowed"
-              >
-                Already in Cart
-              </button>
-              <Link
-                to="/cart"
-                className="ml-4 inline-block mt-4 text-blue-600 hover:underline text-lg font-medium"
-              >
-                View Cart
-              </Link>
-            </>
-          ) : (
-            <button
-              className="mt-4 bg-yellow-500 text-blue-900 py-3 px-6 rounded-full text-lg font-medium hover:bg-yellow-400 transition duration-300"
-              onClick={() => addToCart(product)}
-            >
-              Add to Cart
-            </button>
-          )}
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-6 bg-white shadow-2xl rounded-3xl p-6 sm:p-8">
+        {/* Product Image */}
+        <div className="relative group w-full">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-[350px] sm:h-[450px] object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute top-4 left-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+            NEW
+          </div>
         </div>
+
+        {/* Product Info */}
+        <div className="flex flex-col space-y-6 lg:space-y-4">
+  <div>
+    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">{product.name}</h2>
+    <p className="text-gray-600 leading-relaxed text-lg sm:text-xl lg:text-lg lg:leading-normal">
+      {product.description}
+    </p>
+  </div>
+
+  <div className="text-2xl sm:text-3xl font-bold text-gray-700">₹{product.price.toFixed(2)}</div>
+
+  <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
+    {isInCart ? (
+      <>
+        <button
+          disabled
+          className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-medium flex items-center gap-2 shadow-md cursor-not-allowed"
+        >
+          <FaCheckCircle /> Already in Cart
+        </button>
+        <Link
+          to="/cart"
+          className="text-blue-600 font-medium hover:underline text-lg"
+        >
+          View Cart
+        </Link>
+      </>
+    ) : (
+      <button
+        onClick={() => addToCart(product)}
+        className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-full text-lg font-semibold flex items-center gap-2 shadow-md hover:bg-yellow-300 transition"
+      >
+        <FaShoppingCart /> Add to Cart
+      </button>
+    )}
+  </div>
+
+  <Link to="/" className="mt-6 text-sm text-gray-500 hover:underline">
+    ← Continue Shopping
+  </Link>
+</div>
+
       </div>
     </div>
   );
