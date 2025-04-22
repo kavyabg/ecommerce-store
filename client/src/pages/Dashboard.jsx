@@ -29,7 +29,7 @@ export default function Dashboard() {
             <Link to="/dashboard/orders" className="flex items-center space-x-3 text-gray-600 hover:text-orange-500">
               <FaBoxOpen /> <span>My Orders</span>
             </Link>
-            <Link to="/dashboard/cart" className="flex items-center space-x-3 text-gray-600 hover:text-orange-500">
+            <Link to="/cart" className="flex items-center space-x-3 text-gray-600 hover:text-orange-500">
               <FaClipboardList /> <span>My Cart</span>
             </Link>
             <Link to="/dashboard/favourites" className="flex items-center space-x-3 text-gray-600 hover:text-orange-500">
