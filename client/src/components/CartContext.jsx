@@ -59,6 +59,11 @@ export function CartProvider({ children }) {
     0
   );
 
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem('cartItems'); // optional but clear
+  };
+  
   return (
     <CartContext.Provider
       value={{
@@ -68,6 +73,7 @@ export function CartProvider({ children }) {
         increaseQuantity,
         decreaseQuantity,
         totalPrice,
+        clearCart
       }}
     >
       {children}

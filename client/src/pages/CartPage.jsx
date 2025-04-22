@@ -1,8 +1,7 @@
 import React from 'react';
 import { useCart } from '../components/CartContext';
 import { Link } from 'react-router-dom';
-import { FaTrash } from 'react-icons/fa';
-
+import { FaTrash, FaCartPlus } from 'react-icons/fa';
 function CartPage() {
   const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
@@ -15,10 +14,15 @@ function CartPage() {
       </h1>
 
       {cartItems.length === 0 ? (
-        <div className="text-center">
-          <p className="text-lg text-gray-600 mb-4">Your cart is empty.</p>
-          <Link to="/" className="text-lg text-blue-600 hover:text-yellow-500 font-medium">
-            Shop now
+        <div className="flex flex-col items-center justify-center py-24 px-6">
+          <FaCartPlus className="text-7xl text-yellow-500 mb-6 drop-shadow-lg" />
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
+          <p className="text-md text-gray-600 mb-6">Looks like you haven't added anything yet.</p>
+          <Link
+            to="/"
+            className="inline-block px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full transition duration-300 shadow"
+          >
+            Start Shopping
           </Link>
         </div>
       ) : (

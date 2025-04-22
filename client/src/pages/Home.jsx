@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductList from '../components/ProductList';
 import { fetchProducts } from '../services/api';
-import { Link } from 'react-router-dom';
 
 function Home() {
   const [products, setProducts] = useState([]);
