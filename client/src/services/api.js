@@ -1,5 +1,5 @@
 // services/api.js
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'http://localhost:5000';
 
 // PRODUCTS
 export const fetchProducts = async () => {
@@ -79,4 +79,10 @@ export const addOrder = async (orderData) => {
      console.error("Error while placing order:", error);
      throw new Error(`Order placement failed: ${error.message || 'Unknown error'}`);
   }
+};
+
+export const getOrdersByEmail = async (email) => {
+  const response = await fetch(`${BASE_URL}/orders/${email}`);
+  const data = await response.json();
+  return data;
 };

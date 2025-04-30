@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    // 🚫 Don't navigate from here — do it in the component
   };
 
   return (
@@ -27,5 +26,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// ✅ Export this so it can be reused across the app
 export const useAuth = () => useContext(AuthContext);

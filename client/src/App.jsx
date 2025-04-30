@@ -15,7 +15,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminLogin from './components/AdminLogin';
 import Dashboard from './pages/Dashboard';
-import PrivateRoute from './components/PrivateRoute'; // ✅ import it
+import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute'; 
+import MyOrders from './components/MyOrders';
 
 function App() {
   return (
@@ -28,7 +30,18 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/product/:productNumber" element={<ProductDetail />} />
-              <Route path="/admin" element={<AdminDashboard />} />
+              
+              {/* Admin-only protected route */}
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+
+              {/* Admin login accessible by anyone */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/cart" element={<CartPage />} />
@@ -40,6 +53,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/my-orders"
+                element={
+                  <PrivateRoute>
+                    <MyOrders />
                   </PrivateRoute>
                 }
               />

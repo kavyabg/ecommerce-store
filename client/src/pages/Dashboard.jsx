@@ -18,7 +18,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-2xl font-bold text-blue-700 mb-10">Chemikart</h1>
           <nav className="space-y-4">
-            <Link to="/dashboard" className="flex items-center space-x-3 text-yellow-600 font-semibold">
+            <Link to="/dashboard" className="flex items-center space-x-3 text-yellow-500 font-semibold">
               <FaHome /> <span>Dashboard</span>
             </Link>
             <Link to="/dashboard/profile" className="flex items-center space-x-3 text-gray-600 hover:text-yellow-500">
@@ -26,7 +26,7 @@ export default function Dashboard() {
             </Link>
 
             <h4 className="mt-6 mb-2 text-gray-500 text-sm uppercase">Orders and List</h4>
-            <Link to="/dashboard/orders" className="flex items-center space-x-3 text-gray-600 hover:text-yellow-500">
+            <Link to="/my-orders" className="flex items-center space-x-3 text-gray-600 hover:text-yellow-500">
               <FaBoxOpen /> <span>My Orders</span>
             </Link>
             <Link to="/cart" className="flex items-center space-x-3 text-gray-600 hover:text-yellow-500">
@@ -63,7 +63,7 @@ export default function Dashboard() {
           {/* Profile Settings */}
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-yellow-600">Profile Settings</h3>
+              <h3 className="text-lg font-bold text-yellow-500">Profile Settings</h3>
               <FaUserCog className="text-yellow-500" />
             </div>
             <ul className="text-gray-700 space-y-2 text-sm">
@@ -91,7 +91,7 @@ export default function Dashboard() {
           {/* My Quotes */}
           <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-yellow-600">My Orders</h3>
+            <h3 className="text-lg font-bold text-yellow-500">My Orders</h3>
             <FaClipboardList className="text-yellow-500" />
           </div>
           <ul className="text-gray-700 space-y-2 text-sm">
