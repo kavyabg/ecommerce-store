@@ -21,7 +21,7 @@ import MyOrders from './components/MyOrders';
 
 function App() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <CartProvider>
         <Router>
           <ScrollToTop />
@@ -69,7 +69,7 @@ function App() {
           <Footer />
         </Router>
       </CartProvider>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 

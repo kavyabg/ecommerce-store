@@ -1,10 +1,12 @@
+// src/hooks/useLogin.js
 import { useState } from 'react';
 import { login as loginUser } from '../services/api';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../components/AuthContext';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/authSlice'; // Adjust path if needed
 
 export function useLogin() {
-  const { login } = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const [loading, setLoading] = useState(false);
@@ -19,14 +21,16 @@ export function useLogin() {
       const data = await loginUser(formData);
       setResponseData(data);
 
-      // Save token and user info to context (e.g., AuthContext)
-      login({
-        token: data.token,
-        email: data.email,
-        name: data.name, // optional
-      });
+      // Dispatch login to Redux store
+      dispatch(
+        login({
+          token: data.token,
+          email: data.email,
+          name: data.name, // optional
+        })
+      );
 
-      // Redirect to dashboard or wherever needed
+      // Redirect after successful login
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Login failed');
