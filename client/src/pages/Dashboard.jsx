@@ -18,7 +18,7 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside className="w-72 bg-white shadow-xl rounded-lg px-6 py-8 flex flex-col justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold text-blue-700 mb-12">Chemikart</h1>
+          <h1 className="text-3xl font-extrabold text-blue-700 mb-12">BlossomBeauty</h1>
           <nav className="space-y-6">
             <Link to="/dashboard" className="flex items-center space-x-3 text-yellow-500 font-semibold hover:text-yellow-600 transition duration-300">
               <FaHome className="text-lg" /> <span>Dashboard</span>
