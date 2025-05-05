@@ -1,5 +1,7 @@
 // services/api.js
-const BASE_URL = 'http://localhost:5000';
+// const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'https://ecommerce-store-dcg2.onrender.com';
+
 
 // PRODUCTS
 export const fetchProducts = async () => {
