@@ -7,7 +7,7 @@ const { connectDB } = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes'); 
-
+const userRoutes = require('./routes/userRoutes');
 dotenv.config();
 
 const app = express();
@@ -23,6 +23,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes); 
+app.use('/users', userRoutes);
 
 // Connect DB & Start server
 connectDB().then(() => {

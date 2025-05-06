@@ -18,6 +18,7 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute'; 
 import MyOrders from './components/MyOrders';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -61,6 +62,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <MyOrders />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
                   </PrivateRoute>
                 }
               />
