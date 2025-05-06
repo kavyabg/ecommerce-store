@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import NotFound from './pages/NotFound';
 import { CartProvider } from './components/CartContext';
-import { AuthProvider } from './components/AuthContext';
+// import { AuthProvider } from './components/AuthContext';
 import CartPage from './pages/CartPage';
 import Checkout from './components/Checkout';
 import Login from './pages/Login';
