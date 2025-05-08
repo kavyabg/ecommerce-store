@@ -19,6 +19,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute'; 
 import MyOrders from './components/MyOrders';
 import Profile from './pages/Profile';
+import Wishlist from './components/Wishlist';
 
 function App() {
   return (
@@ -70,6 +71,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Profile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/wishlists"
+                element={
+                  <PrivateRoute>
+                    <Wishlist />
                   </PrivateRoute>
                 }
               />

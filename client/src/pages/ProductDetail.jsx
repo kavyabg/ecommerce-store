@@ -2,13 +2,18 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct';
 import { useCart } from '../components/CartContext';
-import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
+import { FaShoppingCart, FaCheckCircle, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleWishlist } from '../redux/slices/wishlistSlice';
 
 function ProductDetail() {
   const { productNumber } = useParams();
   const { product, loading, error } = useProduct(productNumber);
   const { addToCart, cartItems } = useCart();
 
+  const dispatch = useDispatch();
+  const wishlistItems = useSelector(state => state.wishlist.items);
+  const isInWishlist = wishlistItems.some(item => item.productNumber === product?.productNumber);
   const isInCart = cartItems?.some(item => item.productNumber === product?.productNumber);
 
   if (loading) {
@@ -53,46 +58,54 @@ function ProductDetail() {
 
         {/* Product Info */}
         <div className="flex flex-col space-y-6 lg:space-y-4">
-  <div>
-    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">{product.name}</h2>
-    <p className="text-gray-600 leading-relaxed text-lg sm:text-xl lg:text-lg lg:leading-normal">
-      {product.description}
-    </p>
-  </div>
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">{product.name}</h2>
+            <p className="text-gray-600 leading-relaxed text-lg sm:text-xl lg:text-lg lg:leading-normal">
+              {product.description}
+            </p>
+          </div>
 
-  <div className="text-2xl sm:text-3xl font-bold text-gray-700">₹{product.price.toFixed(2)}</div>
+          <div className="text-2xl sm:text-3xl font-bold text-gray-700">₹{product.price.toFixed(2)}</div>
 
-  <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-    {isInCart ? (
-      <>
-        <button
-          disabled
-          className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-medium flex items-center gap-2 shadow-md cursor-not-allowed"
-        >
-          <FaCheckCircle /> Already in Cart
-        </button>
-        <Link
-          to="/cart"
-          className="text-blue-600 font-medium hover:underline text-lg"
-        >
-          View Cart
-        </Link>
-      </>
-    ) : (
-      <button
-        onClick={() => addToCart(product)}
-        className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-full text-lg font-semibold flex items-center gap-2 shadow-md hover:bg-yellow-300 transition"
-      >
-        <FaShoppingCart /> Add to Cart
-      </button>
-    )}
-  </div>
+          <div className="flex items-center gap-4 mt-4">
+            {/* Wishlist Button */}
+            <button
+              onClick={() => dispatch(toggleWishlist(product))}
+              className={`text-xl p-3 rounded-full shadow-md ${
+                isInWishlist ? 'text-red-500 bg-red-100' : 'text-blue-900 bg-yellow-400'
+              } hover:scale-110 transition`}
+              title={isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            >
+              {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+            </button>
 
-  <Link to="/" className="mt-6 text-sm text-gray-500 hover:underline">
-    ← Continue Shopping
-  </Link>
-</div>
+            {/* Cart Button */}
+            {isInCart ? (
+              <>
+                <button
+                  disabled
+                  className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-medium flex items-center gap-2 shadow-md cursor-not-allowed"
+                >
+                  <FaCheckCircle /> Already in Cart
+                </button>
+                <Link to="/cart" className="text-blue-600 font-medium hover:underline text-lg">
+                  View Cart
+                </Link>
+              </>
+            ) : (
+              <button
+                onClick={() => addToCart(product)}
+                className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-full text-lg font-semibold flex items-center gap-2 shadow-md hover:bg-yellow-300 transition"
+              >
+                <FaShoppingCart /> Add to Cart
+              </button>
+            )}
+          </div>
 
+          <Link to="/" className="mt-6 text-sm text-gray-500 hover:underline">
+            ← Continue Shopping
+          </Link>
+        </div>
       </div>
     </div>
   );
