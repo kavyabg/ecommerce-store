@@ -33,7 +33,7 @@ export default function Dashboard() {
             <NavItem to="/my-orders" icon={<FaBox />} label="Orders" />
             <NavItem to="/cart" icon={<FaShoppingCart />} label="Cart" />
             <NavItem to="/wishlists" icon={<FaHeart />} label="Favourites" />
-            <NavItem to="/returns" icon={<FaHistory />} label="Returns" />
+            {/* <NavItem to="/returns" icon={<FaHistory />} label="Returns" /> */}
           </nav>
         </div>
         <button
