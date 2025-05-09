@@ -1,19 +1,17 @@
-// backend/routes/productRoutes.js
-const express = require('express');
-const {
+import express from 'express';
+import {
   getAllProducts,
-  getProductByProductNumber,  // Changed to handle productNumber
+  getProductByProductNumber,
   createProduct,
   updateProduct,
   deleteProduct
-} = require('../controllers/productController');
-
+} from '../controllers/productController.js'; 
 const router = express.Router();
 
 router.get('/', getAllProducts);
 router.post('/', createProduct);
-router.get('/product/:productNumber', getProductByProductNumber);  // Use the correct route for productNumber
+router.get('/product/:productNumber', getProductByProductNumber);
 router.put('/:id', updateProduct);
 router.delete('/:id', deleteProduct);
 
-module.exports = router;
+export default router;

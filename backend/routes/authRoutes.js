@@ -1,5 +1,5 @@
-const express = require('express');
-const { register, login } = require('../controllers/authController'); // Ensure path is correct
+import express from 'express';
+import { register, login } from '../controllers/authController.js'; 
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.post('/register', register);
 // Login route
 router.post('/login', login);
 
-module.exports = router;
+export default router;
