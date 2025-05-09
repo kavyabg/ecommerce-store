@@ -44,9 +44,9 @@ export const login = async (req, res) => {
     }
 
     // Check if the user is an admin
-    if (user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied: Admins only' });
-    }
+    // if (user.role !== 'admin') {
+    //   return res.status(403).json({ message: 'Access denied: Admins only' });
+    // }
 
     // Send response with user data and JWT token
     res.json({
@@ -96,21 +96,48 @@ export const forgotPassword = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+  try {
+    const { token } = req.params; // Token from the URL
+    const { password } = req.body; // New password
 
-  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-  const user = await User.findOne({
-    resetPasswordToken: hashedToken,
-    resetPasswordExpire: { $gt: Date.now() },
-  });
+    console.log('Received token:', token);
 
-  if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
+    if (!token) {
+      return res.status(400).json({ message: 'Token is required' });
+    }
 
-  user.password = password;
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpire = undefined;
-  await user.save();
+    // Hash the reset token to compare it with the stored hashed token in the DB
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-  res.json({ message: 'Password reset successful' });
+    console.log('Hashed token from URL:', hashedToken);
+
+    // Find the user with the hashed token and check if the token has expired
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() }, // Expiry check
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    console.log('Stored token in DB:', user.resetPasswordToken);
+    console.log('Token expiration time:', user.resetPasswordExpire);
+    console.log('Current time:', Date.now());
+
+    // Hash the new password before saving it
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the user's password and clear the reset token and expiration
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.json({ message: 'Password reset successful' });
+  } catch (error) {
+    console.error('Error during password reset:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
 };

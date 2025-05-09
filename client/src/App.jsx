@@ -20,6 +20,7 @@ import MyOrders from './components/MyOrders';
 import Profile from './pages/Profile';
 import Wishlist from './components/Wishlist';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -69,6 +70,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route
               path="/dashboard"
               element={
