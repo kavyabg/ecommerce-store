@@ -21,7 +21,7 @@ const AdminLogin = () => {
           alt="Admin Login"
           className="object-cover w-full h-full rounded-lg shadow-lg"
         />
-        <div className="absolute top-4 left-4 text-white text-4xl font-bold">
+        <div className="absolute top-4 left-4 text-white text-4xl font-bold bg-red-600 rounded-md shadow-lg p-1">
           <IoMdLogOut
             onClick={handleExit}
             className="cursor-pointer hover:text-gray-300 transition-all duration-300"

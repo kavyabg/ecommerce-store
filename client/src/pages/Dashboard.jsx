@@ -22,7 +22,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-200 to-purple-100 flex">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
       <aside className="w-64 bg-white/80 backdrop-blur-lg shadow-xl rounded-r-3xl py-8 px-6 flex flex-col justify-between">
         <div>
