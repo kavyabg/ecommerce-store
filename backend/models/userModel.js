@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 });
 
 // Hash password before saving
@@ -26,5 +28,4 @@ userSchema.methods.matchPassword = async function(enteredPassword) {
 };
 
 const User = mongoose.model('User', userSchema);
-
-export { User }; 
+export { User };

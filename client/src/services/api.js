@@ -1,6 +1,10 @@
 // services/api.js
-// const BASE_URL = 'http://localhost:5000';
-const BASE_URL = 'https://ecommerce-store-dcg2.onrender.com';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+if (!BASE_URL) {
+  console.error('VITE_API_BASE_URL is not defined');
+  throw new Error('Missing environment variable: VITE_API_BASE_URL');
+}
 
 
 // PRODUCTS
@@ -86,5 +90,23 @@ export const addOrder = async (orderData) => {
 export const getOrdersByEmail = async (email) => {
   const response = await fetch(`${BASE_URL}/orders/${email}`);
   const data = await response.json();
+  return data;
+};
+
+export const forgotPassword = async (email) => {
+  const response = await fetch(`${BASE_URL}/auth/forgot-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to send reset link');
+  }
+
   return data;
 };

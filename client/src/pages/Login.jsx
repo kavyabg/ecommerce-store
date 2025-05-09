@@ -58,10 +58,15 @@ function Login() {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Your password"
             />
+              <div className="text-right mt-1">
+              <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                Forgot your password?
+              </a>
+            </div>
           </div>
 
           {/* Error message */}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && <p className="text-red-500 text-sm !mt-1">{error}</p>}
 
           {/* Submit */}
           <div>

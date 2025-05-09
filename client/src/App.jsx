@@ -19,6 +19,7 @@ import AdminRoute from './components/AdminRoute';
 import MyOrders from './components/MyOrders';
 import Profile from './pages/Profile';
 import Wishlist from './components/Wishlist';
+import ForgotPassword from './pages/ForgotPassword';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -67,6 +68,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/dashboard"
               element={

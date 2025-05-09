@@ -30,7 +30,7 @@ connectDB().then(() => {
   });  
 }).catch((err) => {
   console.error('Database connection failed:', err);
-  process.exit(1);  // Exit process with failure code
+  process.exit(1);  
 });
 
 // Global error handler (optional)
