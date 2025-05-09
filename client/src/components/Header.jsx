@@ -28,10 +28,10 @@ function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-6 items-center">
             <Link to="/" className="text-base font-semibold hover:text-yellow-300 transition">Home</Link>
-            <Link to="/admin/login" className="text-base font-semibold hover:text-yellow-300 transition">Admin</Link>
             <Link to="/dashboard" className="text-base font-semibold hover:text-yellow-300 transition">Dashboard</Link>
             <Link to="/login" className="text-base font-semibold hover:text-yellow-300 transition">Login</Link>
             <Link to="/register" className="text-base font-semibold hover:text-yellow-300 transition">Register</Link>
+            <Link to="/admin/login" className="text-base font-semibold hover:text-yellow-300 transition">Admin</Link>
           </nav>
 
           {/* Mobile Menu Icon */}
