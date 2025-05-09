@@ -1,12 +1,6 @@
 // services/api.js
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-if (!BASE_URL) {
-  console.error('VITE_API_BASE_URL is not defined');
-  throw new Error('Missing environment variable: VITE_API_BASE_URL');
-}
-
-
 // PRODUCTS
 export const fetchProducts = async () => {
   const response = await fetch(`${BASE_URL}/products`);
