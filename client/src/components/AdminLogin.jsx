@@ -1,42 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import useAdminLogin from '../hooks/useAdminLogin';
 
 const AdminLogin = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const res = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || 'Login failed');
-
-      if (data.role !== 'admin') {
-        setError('Access denied: Admins only');
-        return;
-      }
-
-      localStorage.setItem('userToken', data.token);
-      localStorage.setItem('userRole', data.role);
-      navigate('/admin/dashboard');
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const { formData, error, handleChange, handleLogin } = useAdminLogin();
 
   return (
     <div className="flex min-h-screen bg-white">

@@ -35,11 +35,18 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Find user by email
     const user = await User.findOne({ email });
     if (!user || !(await user.matchPassword(password))) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    // Check if the user is an admin
+    if (user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied: Admins only' });
+    }
+
+    // Send response with user data and JWT token
     res.json({
       _id: user._id,
       username: user.username,
