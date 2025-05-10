@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';  
 import { resetPassword } from '../services/api'; 
+import { useParams } from 'react-router-dom';
 
 function ResetPassword() {
-  const location = useLocation();
-  const token = new URLSearchParams(location.search).get('token'); 
+const { token } = useParams();
 
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
