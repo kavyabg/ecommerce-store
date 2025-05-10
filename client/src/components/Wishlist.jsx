@@ -28,6 +28,10 @@ const Wishlist = () => {
     dispatch(clearWishlist());
   };
 
+  const handleClearAllWishlist = () => {
+    dispatch(clearWishlist());
+  };
+
   const handleDelete = (productNumber) => {
     dispatch(removeFromWishlist(productNumber));
   };
@@ -71,11 +75,18 @@ const Wishlist = () => {
           onChange={(e) => setDateFilter(e.target.value)}
         />
         <button
-          className="bg-yellow-500 text-black font-semibold px-5 py-2 rounded hover:bg-yellow-400 flex items-center gap-2 transition duration-300 shadow"
+          className="bg-yellow-500 text-white font-semibold px-5 py-2 rounded hover:bg-yellow-500 flex items-center gap-2 transition duration-300 shadow"
           onClick={handleAddAllToCart}
           disabled={wishlistItems.length === 0}
         >
           <FaPlus /> Add All to Cart
+        </button>
+                <button
+          className="bg-red-500 text-white font-semibold px-5 py-2 rounded hover:bg-red-400 flex items-center gap-2 transition duration-300 shadow"
+          onClick={handleClearAllWishlist}
+          disabled={wishlistItems.length === 0}
+        >
+          <FaTrash /> Delete All Wishlists
         </button>
       </div>
 

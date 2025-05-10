@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { login as loginUser } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/slices/authSlice'; // Adjust path if needed
+import { login } from '../redux/slices/authSlice'; 
 
 export function useLogin() {
   const dispatch = useDispatch();
