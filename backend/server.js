@@ -29,15 +29,12 @@ app.use('/users', userRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from the frontend build folder in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-  // Catch-all route to serve index.html on any unmatched route
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-  });
-}
+// Catch-all route to serve index.html on any unmatched route
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 // Connect DB & Start server
 connectDB().then(() => {
