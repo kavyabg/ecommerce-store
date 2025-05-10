@@ -25,18 +25,15 @@ app.use('/products', productRoutes);
 app.use('/orders', orderRoutes); 
 app.use('/users', userRoutes);
 
-// Static file setup for frontend (React)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-// Catch-all route to serve index.html on any unmatched route
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
-// Connect DB & Start server
 connectDB().then(() => {
   app.listen(process.env.PORT || 5000, () => {
     console.log(`Server running on port ${process.env.PORT || 5000}`);
@@ -46,7 +43,6 @@ connectDB().then(() => {
   process.exit(1);  
 });
 
-// Global error handler (optional)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!', error: err.message });

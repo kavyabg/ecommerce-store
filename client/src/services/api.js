@@ -1,7 +1,6 @@
 // services/api.js
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-// PRODUCTS
 export const fetchProducts = async () => {
   const response = await fetch(`${BASE_URL}/products`);
   const data = await response.json();
@@ -14,7 +13,6 @@ export const fetchProductByProductNumber = async (productNumber) => {
   return data;
 };
 
-// AUTH
 export const register = async (formData) => {
   const response = await fetch(`${BASE_URL}/auth/register`, {
     method: 'POST',
@@ -65,15 +63,14 @@ export const addOrder = async (orderData) => {
      });
 
      const textResponse = await response.text();
-    //  console.log("Raw Response:", textResponse); 
 
      if (!response.ok) {
-        const errorData = JSON.parse(textResponse);  // Use parsed response
+        const errorData = JSON.parse(textResponse); 
         console.error("Order creation failed with response:", errorData);
         throw new Error(errorData.message || 'Failed to place order');
      }
 
-     const data = JSON.parse(textResponse); // Parse the raw response text
+     const data = JSON.parse(textResponse); 
      return data;
   } catch (error) {
      console.error("Error while placing order:", error);
@@ -111,7 +108,7 @@ export const resetPassword = async (token, password) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ password }), // Pass password as body
+    body: JSON.stringify({ password }), 
   });
 
   const data = await response.json();

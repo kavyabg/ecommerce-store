@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';  // To get the token from the URL
-import { resetPassword } from '../services/api'; // Import the resetPassword function
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';  
+import { resetPassword } from '../services/api'; 
 
 function ResetPassword() {
   const location = useLocation();
-  const token = new URLSearchParams(location.search).get('token'); // Get token from URL query params
+  const token = new URLSearchParams(location.search).get('token'); 
 
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,9 +18,9 @@ function ResetPassword() {
     setMessage('');
     try {
       const response = await resetPassword(token, password);
-      setMessage(response.message);  // Show success message
+      setMessage(response.message);  
     } catch (err) {
-      setError(err.message);  // Show error message
+      setError(err.message);  
     } finally {
       setLoading(false);
     }
@@ -60,7 +60,7 @@ function ResetPassword() {
           <div>
             <button
               type="submit"
-              disabled={loading} // Disable button when loading
+              disabled={loading} 
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
             >
               {loading ? 'Resetting...' : 'Reset Password'}
