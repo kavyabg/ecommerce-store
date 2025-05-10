@@ -88,7 +88,30 @@ export const forgotPassword = async (req, res) => {
   await transporter.sendMail({
     to: user.email,
     subject: 'Password Reset',
-    html: `<p>You requested a password reset</p><a href="${resetUrl}">Click here</a>`,
+    html: `
+  <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+      <tr>
+        <td style="padding: 30px; text-align: center;">
+          <h2 style="color: #d63384;">Reset Your Password</h2>
+          <p style="font-size: 16px; color: #333;">
+            We received a request to reset your password. Click the button below to set up a new one.
+          </p>
+          <a href="${resetUrl}" style="display: inline-block; margin-top: 20px; background-color: #d63384; color: #fff; padding: 12px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+            Reset Password
+          </a>
+          <p style="margin-top: 30px; font-size: 14px; color: #777;">
+            If you didn't request this, you can safely ignore this email.
+          </p>
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;">
+          <p style="font-size: 12px; color: #999;">
+            Need help? Contact our support team at <a href="mailto:support@blossombeauty.com" style="color: #d63384;">support@blossombeauty.com</a>.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+`,
   });
 
   res.json({ message: 'Password reset email sent. Check your inbox' });
@@ -99,36 +122,25 @@ export const resetPassword = async (req, res) => {
     const { token } = req.params; // Token from the URL
     const { password } = req.body; // New password
 
-    console.log('Received token:', token);
-
     if (!token) {
       return res.status(400).json({ message: 'Token is required' });
     }
 
-    // Hash the reset token to compare it with the stored hashed token in the DB
+    // Hash the reset token to compare with DB
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-    console.log('Hashed token from URL:', hashedToken);
-
-    // Find the user with the hashed token and check if the token has expired
+    // Find user with matching hashed token and check expiration
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
-      resetPasswordExpire: { $gt: Date.now() }, // Expiry check
+      resetPasswordExpire: { $gt: Date.now() },
     });
 
     if (!user) {
       return res.status(400).json({ message: 'Invalid or expired token' });
     }
 
-    console.log('Stored token in DB:', user.resetPasswordToken);
-    console.log('Token expiration time:', user.resetPasswordExpire);
-    console.log('Current time:', Date.now());
-
-    // Hash the new password before saving it
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Update the user's password and clear the reset token and expiration
-    user.password = hashedPassword;
+    // ✅ Set new password directly — let the pre-save hook hash it
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
