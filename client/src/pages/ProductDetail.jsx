@@ -1,10 +1,15 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useProduct } from '../hooks/useProduct';
-import { useCart } from '../components/CartContext';
-import { FaShoppingCart, FaCheckCircle, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleWishlist } from '../redux/slices/wishlistSlice';
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import { useProduct } from "../hooks/useProduct";
+import { useCart } from "../components/CartContext";
+import {
+  FaShoppingCart,
+  FaCheckCircle,
+  FaHeart,
+  FaRegHeart,
+} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWishlist } from "../redux/slices/wishlistSlice";
 
 function ProductDetail() {
   const { productNumber } = useParams();
@@ -12,9 +17,13 @@ function ProductDetail() {
   const { addToCart, cartItems } = useCart();
 
   const dispatch = useDispatch();
-  const wishlistItems = useSelector(state => state.wishlist.items);
-  const isInWishlist = wishlistItems.some(item => item.productNumber === product?.productNumber);
-  const isInCart = cartItems?.some(item => item.productNumber === product?.productNumber);
+  const wishlistItems = useSelector((state) => state.wishlist.items);
+  const isInWishlist = wishlistItems.some(
+    (item) => item.productNumber === product?.productNumber
+  );
+  const isInCart = cartItems?.some(
+    (item) => item.productNumber === product?.productNumber
+  );
 
   if (loading) {
     return (
@@ -59,22 +68,28 @@ function ProductDetail() {
         {/* Product Info */}
         <div className="flex flex-col space-y-6 lg:space-y-4">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">{product.name}</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">
+              {product.name}
+            </h2>
             <p className="text-gray-600 leading-relaxed text-lg sm:text-xl lg:text-lg lg:leading-normal">
               {product.description}
             </p>
           </div>
 
-          <div className="text-2xl sm:text-3xl font-bold text-gray-700">₹{product.price.toFixed(2)}</div>
+          <div className="text-2xl sm:text-3xl font-bold text-gray-700">
+            ₹{product.price.toFixed(2)}
+          </div>
 
           <div className="flex items-center gap-4 mt-4">
             {/* Wishlist Button */}
             <button
               onClick={() => dispatch(toggleWishlist(product))}
               className={`text-xl p-3 rounded-full shadow-md ${
-                isInWishlist ? 'text-red-500 bg-red-100' : 'text-blue-900 bg-yellow-400'
+                isInWishlist
+                  ? "text-red-500 bg-red-100"
+                  : "text-blue-900 bg-yellow-400"
               } hover:scale-110 transition`}
-              title={isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+              title={isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             >
               {isInWishlist ? <FaHeart /> : <FaRegHeart />}
             </button>
@@ -88,7 +103,10 @@ function ProductDetail() {
                 >
                   <FaCheckCircle /> Already in Cart
                 </button>
-                <Link to="/cart" className="text-blue-600 font-medium hover:underline text-lg">
+                <Link
+                  to="/cart"
+                  className="text-blue-600 font-medium hover:underline text-lg"
+                >
                   View Cart
                 </Link>
               </>

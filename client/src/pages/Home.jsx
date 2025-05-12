@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ProductList from '../components/ProductList';
-import { fetchProducts } from '../services/api';
+import React, { useEffect, useState } from "react";
+import ProductList from "../components/ProductList";
+import { fetchProducts } from "../services/api";
 
 function Home() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
       const productsData = await fetchProducts();
       setProducts(productsData);
-      setLoading(false); 
+      setLoading(false);
     };
     getProducts();
   }, []);
@@ -22,7 +22,9 @@ function Home() {
       <section className="relative bg-blue-900 text-white py-16 px-8 text-center h-[80vh] flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-70"
-          style={{ backgroundImage: 'url(https://picsum.photos/1200/600?random=1)' }}
+          style={{
+            backgroundImage: "url(https://picsum.photos/1200/600?random=1)",
+          }}
         ></div>
         <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
         <div className="relative z-10 text-center text-white px-4">
@@ -43,8 +45,11 @@ function Home() {
 
       {/* Featured Products Section */}
       <section className="py-12 bg-gray-50" id="FeaturedProducts">
-        <h2 className="text-4xl text-center font-semibold mb-8">Featured Products</h2>
-        <ProductList products={products} loading={loading} /> {/* ✅ Use loading */}
+        <h2 className="text-4xl text-center font-semibold mb-8">
+          Featured Products
+        </h2>
+        <ProductList products={products} loading={loading} />{" "}
+        {/* ✅ Use loading */}
       </section>
     </div>
   );

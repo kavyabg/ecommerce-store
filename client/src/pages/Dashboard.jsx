@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaSignOutAlt,
   FaUserCircle,
@@ -10,9 +10,9 @@ import {
   FaHome,
   FaBars,
   FaTimes,
-} from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/slices/authSlice';
+} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -33,14 +33,18 @@ export default function Dashboard() {
       <div className="md:hidden flex items-center justify-between p-4 bg-white shadow">
         <h1 className="text-2xl font-bold text-pink-600">BlossomBeauty</h1>
         <button onClick={() => setSidebarOpen(!sidebarOpen)}>
-          {sidebarOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+          {sidebarOpen ? (
+            <FaTimes className="text-2xl" />
+          ) : (
+            <FaBars className="text-2xl" />
+          )}
         </button>
       </div>
 
       {/* Sidebar */}
       <aside
         className={`${
-          sidebarOpen ? 'block' : 'hidden'
+          sidebarOpen ? "block" : "hidden"
         } md:block w-full md:w-64 bg-white/80 backdrop-blur-lg shadow-xl md:rounded-r-3xl py-8 px-6 flex flex-col justify-between z-20`}
       >
         <div>
@@ -76,7 +80,9 @@ export default function Dashboard() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-1">
                 Hello, <span className="text-pink-500">{user?.username}</span>
               </h2>
-              <p className="text-base md:text-lg text-gray-600">{user?.email}</p>
+              <p className="text-base md:text-lg text-gray-600">
+                {user?.email}
+              </p>
             </>
           )}
         </header>
@@ -88,16 +94,28 @@ export default function Dashboard() {
             ))
           ) : (
             <>
-              <Card title="Quick Settings" icon={<FaUserCircle className="text-pink-500" />}>
+              <Card
+                title="Quick Settings"
+                icon={<FaUserCircle className="text-pink-500" />}
+              >
                 Manage account, update info, and secure settings.
               </Card>
-              <Card title="Orders Overview" icon={<FaBox className="text-yellow-500" />}>
+              <Card
+                title="Orders Overview"
+                icon={<FaBox className="text-yellow-500" />}
+              >
                 Track, reorder, and manage your past purchases.
               </Card>
-              <Card title="Your Cart" icon={<FaShoppingCart className="text-blue-500" />}>
+              <Card
+                title="Your Cart"
+                icon={<FaShoppingCart className="text-blue-500" />}
+              >
                 View and adjust your current shopping list.
               </Card>
-              <Card title="Favourites" icon={<FaHeart className="text-red-400" />}>
+              <Card
+                title="Favourites"
+                icon={<FaHeart className="text-red-400" />}
+              >
                 View and manage your saved products.
               </Card>
               {/* <Card title="Return History" icon={<FaHistory className="text-purple-500" />}>
@@ -128,7 +146,9 @@ function Card({ title, icon, children }) {
     <div className="bg-white/70 backdrop-blur-sm shadow-md rounded-2xl p-6 hover:shadow-xl transition">
       <div className="flex items-center gap-4 mb-4">
         <div className="text-3xl">{icon}</div>
-        <h3 className="text-lg md:text-xl font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-lg md:text-xl font-semibold text-gray-800">
+          {title}
+        </h3>
       </div>
       <p className="text-gray-600 text-sm md:text-base">{children}</p>
     </div>

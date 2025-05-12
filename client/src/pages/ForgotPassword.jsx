@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { FaPaperPlane } from 'react-icons/fa';
-import { useForgotPassword } from '../hooks/useForgotPassword'; // adjust path as needed
+import React, { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
+import { useForgotPassword } from "../hooks/useForgotPassword"; // adjust path as needed
 
 function ForgotPassword() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const { loading, message, error, submitForgotPassword } = useForgotPassword();
 
   const handleSubmit = (e) => {
@@ -23,7 +23,10 @@ function ForgotPassword() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email address
             </label>
             <input
@@ -47,13 +50,13 @@ function ForgotPassword() {
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
             >
               <FaPaperPlane />
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? "Sending..." : "Send Reset Link"}
             </button>
           </div>
         </form>
 
         <p className="mt-6 text-sm text-center text-gray-600">
-          Remember your password?{' '}
+          Remember your password?{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Go back to login
           </a>

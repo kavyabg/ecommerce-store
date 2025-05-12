@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useLogin } from '../hooks/useLogin';
+import React, { useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 
 function Login() {
   const { handleLogin, loading, error } = useLogin();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -28,7 +28,10 @@ function Login() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email
             </label>
             <input
@@ -45,7 +48,10 @@ function Login() {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Password
             </label>
             <input
@@ -58,8 +64,11 @@ function Login() {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Your password"
             />
-              <div className="text-right mt-1">
-              <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+            <div className="text-right mt-1">
+              <a
+                href="/forgot-password"
+                className="text-sm text-blue-600 hover:underline"
+              >
                 Forgot your password?
               </a>
             </div>
@@ -75,14 +84,14 @@ function Login() {
               disabled={loading} // Disable button when loading
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>
 
         {/* Footer */}
         <p className="mt-6 text-sm text-center text-gray-600">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <a href="/register" className="text-blue-600 hover:underline">
             Register here
           </a>

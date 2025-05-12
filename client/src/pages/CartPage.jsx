@@ -1,11 +1,15 @@
-import React from 'react';
-import { useCart } from '../components/CartContext';
-import { Link } from 'react-router-dom';
-import { FaTrash, FaCartPlus } from 'react-icons/fa';
+import React from "react";
+import { useCart } from "../components/CartContext";
+import { Link } from "react-router-dom";
+import { FaTrash, FaCartPlus } from "react-icons/fa";
 function CartPage() {
-  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } =
+    useCart();
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -16,8 +20,12 @@ function CartPage() {
       {cartItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 px-6">
           <FaCartPlus className="text-7xl text-yellow-500 mb-6 drop-shadow-lg" />
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
-          <p className="text-md text-gray-600 mb-6">Looks like you haven't added anything yet.</p>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            Your Cart is Empty
+          </h2>
+          <p className="text-md text-gray-600 mb-6">
+            Looks like you haven't added anything yet.
+          </p>
           <Link
             to="/"
             className="inline-block px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full transition duration-300 shadow"
@@ -47,17 +55,23 @@ function CartPage() {
                       <button
                         onClick={() => decreaseQuantity(item.productNumber)}
                         className="w-8 h-8 rounded border bg-blue-100 text-blue-700 hover:text-yellow-500"
-                      >−</button>
+                      >
+                        −
+                      </button>
                       <span className="px-2">{item.quantity}</span>
                       <button
                         onClick={() => increaseQuantity(item.productNumber)}
                         className="w-8 h-8 rounded border bg-blue-100 text-blue-700 hover:text-yellow-500"
-                      >+</button>
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
                 <div className="mt-4 md:mt-0 flex justify-between md:flex-col items-end space-y-2">
-                  <p className="text-lg font-semibold text-gray-800">₹{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-lg font-semibold text-gray-800">
+                    ₹{(item.price * item.quantity).toFixed(2)}
+                  </p>
                   <button
                     onClick={() => removeFromCart(item.productNumber)}
                     className="text-red-600 hover:text-yellow-500 text-sm flex items-center"
