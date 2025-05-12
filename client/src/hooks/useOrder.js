@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getOrdersByEmail } from '../services/api';
+import { useSelector } from 'react-redux';
 
 const useOrdersByEmail = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem('user'));
         if (!user?.email) {
           throw new Error('User email not found in localStorage');
         }

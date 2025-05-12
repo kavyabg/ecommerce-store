@@ -1,24 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-const user = JSON.parse(localStorage.getItem('user'));
+// Initial state is no longer dependent on localStorage; redux-persist will handle it
+const initialState = {
+  user: null,
+  isAuthenticated: false,
+};
 
 const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
-    user: user || null,
-    isAuthenticated: !!user,
-  },
+  name: "auth",
+  initialState,
   reducers: {
     login: (state, action) => {
       const fullUser = action.payload;
-      state.user = action.payload;
+      state.user = fullUser;
       state.isAuthenticated = true;
-      localStorage.setItem('user', JSON.stringify({token: fullUser.token, email: fullUser.email}));
     },
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      localStorage.removeItem('user');
     },
   },
 });
