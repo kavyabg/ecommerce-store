@@ -1,16 +1,16 @@
 // src/hooks/useRegister.js
-import { useState } from 'react';
-import { register as registerUser } from '../services/api';
+import { useState } from "react";
+import { register as registerUser } from "../services/api";
 
 export function useRegister() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [responseData, setResponseData] = useState(null);
 
   const register = async (formData) => {
     setLoading(true);
-    setError('');
+    setError("");
     setSuccess(false);
 
     try {
@@ -18,8 +18,8 @@ export function useRegister() {
       setResponseData(data);
       setSuccess(true);
     } catch (err) {
-      console.error('Registration error:', err);
-      setError(err.message || 'Registration failed');
+      console.error("Registration error:", err);
+      setError(err.message || "Registration failed");
     } finally {
       setLoading(false);
     }

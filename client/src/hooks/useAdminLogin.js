@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login as loginApi } from '../services/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login as loginApi } from "../services/api";
 
 const useAdminLogin = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,20 +13,20 @@ const useAdminLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       const data = await loginApi(formData);
 
       // Only allow admin role
-      if (data.role !== 'admin') {
-        setError('Access denied: Admins only');
+      if (data.role !== "admin") {
+        setError("Access denied: Admins only");
         return;
       }
 
-      localStorage.setItem('userToken', data.token);
-      localStorage.setItem('userRole', data.role);
-      navigate('/admin/dashboard');
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userRole", data.role);
+      navigate("/admin/dashboard");
     } catch (err) {
       setError(err.message);
     }
