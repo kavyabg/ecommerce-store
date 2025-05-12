@@ -8,7 +8,7 @@ export const fetchProducts = async () => {
 };
 
 export const fetchProductByProductNumber = async (productNumber) => {
-  const response = await fetch(`${BASE_URL}/products/product/${productNumber}`);
+  const response = await fetch(`${BASE_URL}/products/${productNumber}`);
   const data = await response.json();
   return data;
 };
@@ -118,4 +118,20 @@ export const resetPassword = async (token, password) => {
   }
 
   return data;
+};
+
+export const getUserByEmail = async (email) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${encodeURIComponent(email)}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user');
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw new Error(error.message || 'Failed to fetch user');
+  }
 };

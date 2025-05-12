@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/', getAllProducts);
 router.post('/', createProduct);
-router.get('/product/:productNumber', getProductByProductNumber);
+router.get('/:productNumber', getProductByProductNumber);
 router.put('/:id', updateProduct);
 router.delete('/:id', deleteProduct);
 

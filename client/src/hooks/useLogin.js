@@ -22,13 +22,7 @@ export function useLogin() {
       setResponseData(data);
 
       // Dispatch login to Redux store
-      dispatch(
-        login({
-          token: data.token,
-          email: data.email,
-          name: data.name, // optional
-        })
-      );
+      dispatch(login(data));
 
       // Redirect after successful login
       navigate('/dashboard');
