@@ -1,10 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   return (
     <div className="border p-4 m-2 rounded-lg shadow-lg">
-      <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4" />
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-full h-64 object-cover mb-4"
+      />
       <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
       <p className="text-gray-700 mb-4">{product.description}</p>
       <Link

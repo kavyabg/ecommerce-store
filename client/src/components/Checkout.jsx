@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { useCart } from '../components/CartContext';
-import { addOrder } from '../services/api';
+import React, { useState } from "react";
+import { useCart } from "../components/CartContext";
+import { addOrder } from "../services/api";
 
 const Checkout = () => {
   const { cartItems, totalPrice, clearCart } = useCart();
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    contact: '',
-    address: '',
+    name: "",
+    email: "",
+    contact: "",
+    address: "",
   });
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [transactionId, setTransactionId] = useState('');
+  const [transactionId, setTransactionId] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,10 +29,12 @@ const Checkout = () => {
 
     if (!name.trim()) newErrors.name = "Name is required.";
     if (!email.trim()) newErrors.email = "Email is required.";
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Invalid email format.";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      newErrors.email = "Invalid email format.";
 
     if (!contact.trim()) newErrors.contact = "Contact number is required.";
-    else if (!/^\d{10}$/.test(contact)) newErrors.contact = "Enter a valid 10-digit number.";
+    else if (!/^\d{10}$/.test(contact))
+      newErrors.contact = "Enter a valid 10-digit number.";
 
     if (!address.trim()) newErrors.address = "Address is required.";
 
@@ -65,7 +67,7 @@ const Checkout = () => {
             contact,
             address,
           },
-          items: cartItems.map(item => ({
+          items: cartItems.map((item) => ({
             productNumber: item.productNumber,
             name: item.name,
             price: item.price,
@@ -74,8 +76,7 @@ const Checkout = () => {
           totalPrice,
           transactionId: paymentId,
         };
-        
-        
+
         console.log("Order Payload:", orderPayload);
 
         try {
@@ -96,7 +97,7 @@ const Checkout = () => {
 
   const inputClass = (field) =>
     `w-full p-3 border rounded-md focus:outline-none focus:ring-2 ${
-      errors[field] ? 'border-red-500 ring-red-300' : 'focus:ring-yellow-400'
+      errors[field] ? "border-red-500 ring-red-300" : "focus:ring-yellow-400"
     }`;
 
   return (
@@ -106,7 +107,9 @@ const Checkout = () => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Shipping Form */}
         <div className="bg-white p-8 rounded-xl shadow-md flex-1">
-          <h3 className="text-2xl font-semibold mb-6 text-gray-800">Shipping Address</h3>
+          <h3 className="text-2xl font-semibold mb-6 text-gray-800">
+            Shipping Address
+          </h3>
           <form className="flex flex-col gap-5">
             {["name", "email", "contact", "address"].map((field) => (
               <div key={field}>
@@ -121,16 +124,22 @@ const Checkout = () => {
                   />
                 ) : (
                   <input
-                    type={field === "email" ? "email" : field === "contact" ? "tel" : "text"}
+                    type={
+                      field === "email"
+                        ? "email"
+                        : field === "contact"
+                          ? "tel"
+                          : "text"
+                    }
                     name={field}
                     placeholder={
                       field === "name"
                         ? "Full Name"
                         : field === "email"
-                        ? "Email"
-                        : field === "contact"
-                        ? "Phone Number"
-                        : "Address"
+                          ? "Email"
+                          : field === "contact"
+                            ? "Phone Number"
+                            : "Address"
                     }
                     value={formData[field]}
                     onChange={handleChange}
@@ -147,10 +156,15 @@ const Checkout = () => {
 
         {/* Order Summary */}
         <div className="bg-white p-8 rounded-xl shadow-md flex-1">
-          <h3 className="text-2xl font-semibold mb-6 text-gray-800">Order Summary</h3>
+          <h3 className="text-2xl font-semibold mb-6 text-gray-800">
+            Order Summary
+          </h3>
           <div className="flex flex-col gap-4">
             {cartItems.map((item) => (
-              <div key={item.productNumber} className="flex justify-between items-center border-b pb-2">
+              <div
+                key={item.productNumber}
+                className="flex justify-between items-center border-b pb-2"
+              >
                 <div>
                   <p className="font-medium text-lg">{item.name}</p>
                   <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
@@ -181,13 +195,26 @@ const Checkout = () => {
           <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-2xl text-center max-w-md w-full animate-fadeIn scale-95">
             <div className="flex justify-center mb-4">
               <div className="bg-green-100 text-green-600 rounded-full p-3">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-green-700">Payment Successful!</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-green-700">
+              Payment Successful!
+            </h2>
             <p className="text-gray-700 mb-1">Your order has been confirmed.</p>
             <p className="text-gray-600 mb-4 font-medium">Transaction ID:</p>
             <p className="text-sm bg-gray-100 border border-gray-200 px-4 py-2 rounded-lg text-gray-800 break-all">

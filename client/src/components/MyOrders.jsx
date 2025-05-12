@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import useOrdersByEmail from '../hooks/useOrder';
-import { FaBoxOpen } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import useOrdersByEmail from "../hooks/useOrder";
+import { FaBoxOpen } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const formatDate = (dateStr) =>
-  new Date(dateStr).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
+  new Date(dateStr).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
   });
 
 const MyOrders = () => {
   const { orders, loading, error } = useOrdersByEmail();
-  const [selectedDate, setSelectedDate] = useState('all');
+  const [selectedDate, setSelectedDate] = useState("all");
 
   const uniqueDates = Array.from(
     new Set(orders.map((order) => formatDate(order.createdAt)))
   );
 
   const filteredOrders =
-    selectedDate === 'all'
+    selectedDate === "all"
       ? orders
       : orders.filter((order) => formatDate(order.createdAt) === selectedDate);
 
@@ -35,7 +35,9 @@ const MyOrders = () => {
 
       {orders.length > 0 && (
         <div className="mb-6">
-          <label className="text-blue-700 font-semibold mr-2">Filter by Date:</label>
+          <label className="text-blue-700 font-semibold mr-2">
+            Filter by Date:
+          </label>
           <select
             className="border rounded px-3 py-1 text-sm bg-white"
             value={selectedDate}
@@ -43,7 +45,9 @@ const MyOrders = () => {
           >
             <option value="all">All Dates</option>
             {uniqueDates.map((date) => (
-              <option key={date} value={date}>{date}</option>
+              <option key={date} value={date}>
+                {date}
+              </option>
             ))}
           </select>
         </div>
@@ -64,8 +68,12 @@ const MyOrders = () => {
         orders.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 px-6">
             <FaBoxOpen className="text-7xl text-yellow-500 mb-6 drop-shadow-lg" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">No Orders Yet</h2>
-            <p className="text-md text-gray-600 mb-6">Looks like you haven't placed any orders yet.</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+              No Orders Yet
+            </h2>
+            <p className="text-md text-gray-600 mb-6">
+              Looks like you haven't placed any orders yet.
+            </p>
             <Link
               to="/"
               className="inline-block px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full transition duration-300 shadow"
@@ -75,8 +83,12 @@ const MyOrders = () => {
           </div>
         ) : (
           <div className="text-center py-24">
-            <p className="text-2xl font-semibold text-gray-700 mb-2">No matching orders found</p>
-            <p className="text-gray-500">Try selecting a different date filter.</p>
+            <p className="text-2xl font-semibold text-gray-700 mb-2">
+              No matching orders found
+            </p>
+            <p className="text-gray-500">
+              Try selecting a different date filter.
+            </p>
           </div>
         )
       ) : (
@@ -86,14 +98,27 @@ const MyOrders = () => {
             className="border-l-4 border-yellow-500 bg-white rounded-xl shadow p-6 mb-6"
           >
             <div className="mb-4 space-y-1 text-sm">
-              <p><strong className="text-blue-700">Order ID:</strong> {order._id}</p>
-              <p><strong className="text-blue-700">Date:</strong> {formatDate(order.createdAt)}</p>
               <p>
-                <strong className="text-blue-700">Status:</strong>{' '}
-                <span className="text-green-600 font-medium">{order.status}</span>
+                <strong className="text-blue-700">Order ID:</strong> {order._id}
               </p>
-              <p><strong className="text-blue-700">Transaction ID:</strong> {order.transactionId}</p>
-              <p><strong className="text-blue-700">Total:</strong> ₹{order.totalPrice.toFixed(2)}</p>
+              <p>
+                <strong className="text-blue-700">Date:</strong>{" "}
+                {formatDate(order.createdAt)}
+              </p>
+              <p>
+                <strong className="text-blue-700">Status:</strong>{" "}
+                <span className="text-green-600 font-medium">
+                  {order.status}
+                </span>
+              </p>
+              <p>
+                <strong className="text-blue-700">Transaction ID:</strong>{" "}
+                {order.transactionId}
+              </p>
+              <p>
+                <strong className="text-blue-700">Total:</strong> ₹
+                {order.totalPrice.toFixed(2)}
+              </p>
             </div>
             <div>
               <h3 className="text-blue-600 font-semibold mb-2">Items:</h3>
