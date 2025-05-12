@@ -1,7 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAdminLogin from '../hooks/useAdminLogin';
-import { FaSignInAlt } from 'react-icons/fa'; 
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import useAdminLogin from "../hooks/useAdminLogin";
+import { FaSignInAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 
 const AdminLogin = () => {
@@ -9,7 +9,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const handleExit = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -35,12 +35,16 @@ const AdminLogin = () => {
           onSubmit={handleLogin}
           className="bg-white shadow-2xl rounded-xl px-8 pt-6 pb-8 w-full max-w-md space-y-6"
         >
-          <h2 className="text-3xl font-extrabold text-center text-gray-700">Admin Login</h2>
+          <h2 className="text-3xl font-extrabold text-center text-gray-700">
+            Admin Login
+          </h2>
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <div className="mb-6">
-            <label className="block text-gray-600 text-sm font-medium mb-2">Email</label>
+            <label className="block text-gray-600 text-sm font-medium mb-2">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -52,7 +56,9 @@ const AdminLogin = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-600 text-sm font-medium mb-2">Password</label>
+            <label className="block text-gray-600 text-sm font-medium mb-2">
+              Password
+            </label>
             <input
               type="password"
               name="password"

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
@@ -6,19 +6,21 @@ export const useCart = () => useContext(CartContext);
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
-    const storedCart = localStorage.getItem('cartItems');
+    const storedCart = localStorage.getItem("cartItems");
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems((prev) => {
-      const existing = prev.find(item => item.productNumber === product.productNumber);
+      const existing = prev.find(
+        (item) => item.productNumber === product.productNumber
+      );
       if (existing) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.productNumber === product.productNumber
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -30,13 +32,13 @@ export function CartProvider({ children }) {
 
   const removeFromCart = (productNumber) => {
     setCartItems((prev) =>
-      prev.filter(item => item.productNumber !== productNumber)
+      prev.filter((item) => item.productNumber !== productNumber)
     );
   };
 
   const increaseQuantity = (productNumber) => {
-    setCartItems(prev =>
-      prev.map(item =>
+    setCartItems((prev) =>
+      prev.map((item) =>
         item.productNumber === productNumber
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -45,8 +47,8 @@ export function CartProvider({ children }) {
   };
 
   const decreaseQuantity = (productNumber) => {
-    setCartItems(prev =>
-      prev.map(item =>
+    setCartItems((prev) =>
+      prev.map((item) =>
         item.productNumber === productNumber && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
@@ -61,9 +63,9 @@ export function CartProvider({ children }) {
 
   const clearCart = () => {
     setCartItems([]);
-    localStorage.removeItem('cartItems'); // optional but clear
+    localStorage.removeItem("cartItems"); // optional but clear
   };
-  
+
   return (
     <CartContext.Provider
       value={{
@@ -73,7 +75,7 @@ export function CartProvider({ children }) {
         increaseQuantity,
         decreaseQuantity,
         totalPrice,
-        clearCart
+        clearCart,
       }}
     >
       {children}
