@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { resetPassword } from '../services/api'; 
-import { useParams } from 'react-router-dom';
+import { useState } from "react";
+import { resetPassword } from "../services/api";
+import { useParams } from "react-router-dom";
 
 function ResetPassword() {
-const { token } = useParams();
+  const { token } = useParams();
 
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     try {
       const response = await resetPassword(token, password);
-      setMessage(response.message);  
+      setMessage(response.message);
     } catch (err) {
-      setError(err.message);  
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -35,7 +35,10 @@ const { token } = useParams();
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* New Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               New Password
             </label>
             <input
@@ -59,17 +62,17 @@ const { token } = useParams();
           <div>
             <button
               type="submit"
-              disabled={loading} 
+              disabled={loading}
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300"
             >
-              {loading ? 'Resetting...' : 'Reset Password'}
+              {loading ? "Resetting..." : "Reset Password"}
             </button>
           </div>
         </form>
 
         {/* Footer */}
         <p className="mt-6 text-sm text-center text-gray-600">
-          Remember your password?{' '}
+          Remember your password?{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Login here
           </a>

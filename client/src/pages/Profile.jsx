@@ -1,11 +1,11 @@
-import { useUserByEmail } from '../hooks/useUserByEmail';
+import { useUserByEmail } from "../hooks/useUserByEmail";
 import {
   FaUser,
   FaEnvelope,
   FaPhoneAlt,
   FaShieldAlt,
   FaExclamationTriangle,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 export default function Profile() {
   const { userData, loading, error } = useUserByEmail();
@@ -21,7 +21,10 @@ export default function Profile() {
           </div>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+              <div
+                key={i}
+                className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm"
+              >
                 <div className="w-6 h-6 bg-gray-200 rounded-full" />
                 <div className="flex-1">
                   <div className="h-4 w-24 bg-gray-200 mb-2 rounded" />
@@ -49,7 +52,9 @@ export default function Profile() {
       <div className="flex flex-col items-center justify-center h-[70vh] text-center px-4">
         <FaUser className="text-gray-400 text-5xl mb-4" />
         <p className="text-lg text-gray-500 font-medium">No user data found.</p>
-        <p className="text-sm text-gray-400">We couldn’t find any profile details for this account.</p>
+        <p className="text-sm text-gray-400">
+          We couldn’t find any profile details for this account.
+        </p>
       </div>
     );
   }
@@ -73,9 +78,21 @@ export default function Profile() {
 
         {/* Profile Details */}
         <div className="space-y-4 text-gray-700">
-          <ProfileDetail icon={<FaEnvelope className="text-blue-600" />} label="Email" value={userData.email} />
-          <ProfileDetail icon={<FaPhoneAlt className="text-green-600" />} label="Phone" value={userData.phone} />
-          <ProfileDetail icon={<FaShieldAlt className="text-purple-600" />} label="Role" value={userData.role} />
+          <ProfileDetail
+            icon={<FaEnvelope className="text-blue-600" />}
+            label="Email"
+            value={userData.email}
+          />
+          <ProfileDetail
+            icon={<FaPhoneAlt className="text-green-600" />}
+            label="Phone"
+            value={userData.phone}
+          />
+          <ProfileDetail
+            icon={<FaShieldAlt className="text-purple-600" />}
+            label="Role"
+            value={userData.role}
+          />
         </div>
       </div>
     </div>

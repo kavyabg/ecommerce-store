@@ -4,13 +4,13 @@ import cartReducer from './slices/cartSlice';
 import wishlistReducer from './slices/wishlistSlice';
 
 import { persistReducer, persistStore } from 'redux-persist';
-import storageSession from 'redux-persist/lib/storage/session'; // use sessionStorage
+import storage from 'redux-persist/lib/storage'; // changed to use localStorage
 import { combineReducers } from 'redux';
 
 // Persist config only for auth slice
 const persistConfig = {
   key: 'auth',
-  storage: storageSession,
+  storage: storage, // use localStorage
   whitelist: ['user', 'isAuthenticated'], // only persist these
 };
 

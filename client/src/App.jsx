@@ -20,6 +20,7 @@ import Profile from './pages/Profile';
 import Wishlist from './components/Wishlist';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import SessionManager from './components/SessionManager';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
+    <SessionManager />
       {!isAdminRoute && <Header />}
       <main className={`min-h-screen bg-gray-50 ${paddingClass}`}>
         {children}

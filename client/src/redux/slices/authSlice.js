@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Initial state is no longer dependent on localStorage; redux-persist will handle it
 const initialState = {
   user: null,
   isAuthenticated: false,
+  expiresAt: null,
 };
 
 const authSlice = createSlice({
@@ -14,10 +14,13 @@ const authSlice = createSlice({
       const fullUser = action.payload;
       state.user = fullUser;
       state.isAuthenticated = true;
+      const twentyDaysInMs = 1000 * 60 * 60 * 24 * 20;
+      state.expiresAt = Date.now() + twentyDaysInMs;
     },
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.expiresAt = null;
     },
   },
 });
