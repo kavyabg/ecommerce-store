@@ -27,13 +27,15 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import SessionManager from "./components/SessionManager";
 
+// Admin layout and pages
+import AdminLayout from "./components/admin/AdminLayout";
+import UserList from "./components/admin/UserList";
+
+// Layout for non-admin pages
 const Layout = ({ children }) => {
   const location = useLocation();
-
-  // Check if we're on an admin route
   const isAdminRoute = location.pathname.startsWith("/admin");
 
-  // Apply different padding if it's an admin route
   const paddingClass = isAdminRoute ? "px-0 py-0" : "px-4 sm:px-8 py-4";
 
   return (
@@ -43,8 +45,7 @@ const Layout = ({ children }) => {
       <main className={`min-h-screen bg-gray-50 ${paddingClass}`}>
         {children}
       </main>
-      {!isAdminRoute && <Footer />}{" "}
-      {/* Only show Footer if not on admin route */}
+      {!isAdminRoute && <Footer />}
     </>
   );
 };
@@ -56,22 +57,9 @@ function App() {
         <ScrollToTop />
         <Layout>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/product/:productNumber" element={<ProductDetail />} />
-
-            {/* Admin-only protected route */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
-
-            {/* Admin login accessible by anyone */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
@@ -110,6 +98,25 @@ function App() {
                 </PrivateRoute>
               }
             />
+
+            {/* Admin login (standalone) */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+
+            {/* Admin Routes with Sidebar Layout */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminLayout />
+                </AdminRoute>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="users" element={<UserList />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </Router>
