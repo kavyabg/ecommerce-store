@@ -1,6 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import useAdminLogin from "../hooks/useAdminLogin";
+import useAdminLogin from "../../hooks/admin/useAdminLogin";
 import { FaSignInAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 
