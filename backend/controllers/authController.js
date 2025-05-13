@@ -130,8 +130,8 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   try {
-    const { token } = req.params; // Token from the URL
-    const { password } = req.body; // New password
+    const { token } = req.params; 
+    const { password } = req.body; 
 
     if (!token) {
       return res.status(400).json({ message: "Token is required" });
@@ -150,7 +150,7 @@ export const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
 
-    // ✅ Set new password directly — let the pre-save hook hash it
+    // Set new password directly — let the pre-save hook hash it
     user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
