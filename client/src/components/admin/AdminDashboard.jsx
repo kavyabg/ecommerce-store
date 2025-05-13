@@ -1,6 +1,4 @@
-
-const AdminDashboard = () => {
-  
+const AdminDashboard = () => {  
   return (
     <div>
       {/* Page Header */}

@@ -8,8 +8,9 @@ import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-dotenv.config();
+import userListRoutes from "./routes/admin/userListRoutes.js"
 
+dotenv.config();
 const app = express();
 
 // Middleware
@@ -26,6 +27,7 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/users", userRoutes);
+app.use("/userlist", userListRoutes);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
