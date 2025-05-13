@@ -15,34 +15,33 @@ export const fetchProductByProductNumber = async (productNumber) => {
 
 export const register = async (formData) => {
   const response = await fetch(`${BASE_URL}/auth/register`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || 'Registration failed');
+    throw new Error(error.message || "Registration failed");
   }
 
   return await response.json();
 };
 
-
 export const login = async (formData) => {
   const response = await fetch(`${BASE_URL}/auth/login`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || 'Login failed');
+    throw new Error(error.message || "Login failed");
   }
 
   return await response.json();
@@ -50,31 +49,38 @@ export const login = async (formData) => {
 
 export const addOrder = async (orderData) => {
   try {
-     if (!orderData || !orderData.customer || !orderData.items || orderData.items.length === 0) {
-        throw new Error("Invalid order data: Missing customer or items.");
-     }
+    if (
+      !orderData ||
+      !orderData.customer ||
+      !orderData.items ||
+      orderData.items.length === 0
+    ) {
+      throw new Error("Invalid order data: Missing customer or items.");
+    }
 
-     const response = await fetch(`${BASE_URL}/orders`, {
-        method: 'POST',
-        headers: {
-           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-     });
+    const response = await fetch(`${BASE_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
 
-     const textResponse = await response.text();
+    const textResponse = await response.text();
 
-     if (!response.ok) {
-        const errorData = JSON.parse(textResponse); 
-        console.error("Order creation failed with response:", errorData);
-        throw new Error(errorData.message || 'Failed to place order');
-     }
+    if (!response.ok) {
+      const errorData = JSON.parse(textResponse);
+      console.error("Order creation failed with response:", errorData);
+      throw new Error(errorData.message || "Failed to place order");
+    }
 
-     const data = JSON.parse(textResponse); 
-     return data;
+    const data = JSON.parse(textResponse);
+    return data;
   } catch (error) {
-     console.error("Error while placing order:", error);
-     throw new Error(`Order placement failed: ${error.message || 'Unknown error'}`);
+    console.error("Error while placing order:", error);
+    throw new Error(
+      `Order placement failed: ${error.message || "Unknown error"}`
+    );
   }
 };
 
@@ -86,9 +92,9 @@ export const getOrdersByEmail = async (email) => {
 
 export const forgotPassword = async (email) => {
   const response = await fetch(`${BASE_URL}/auth/forgot-password`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ email }),
   });
@@ -96,7 +102,7 @@ export const forgotPassword = async (email) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Failed to send reset link');
+    throw new Error(data.message || "Failed to send reset link");
   }
 
   return data;
@@ -104,17 +110,17 @@ export const forgotPassword = async (email) => {
 
 export const resetPassword = async (token, password) => {
   const response = await fetch(`${BASE_URL}/auth/reset-password/${token}`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password }), 
+    body: JSON.stringify({ password }),
   });
 
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Password reset failed');
+    throw new Error(data.message || "Password reset failed");
   }
 
   return data;
@@ -122,16 +128,18 @@ export const resetPassword = async (token, password) => {
 
 export const getUserByEmail = async (email) => {
   try {
-    const response = await fetch(`${BASE_URL}/users/${encodeURIComponent(email)}`);
+    const response = await fetch(
+      `${BASE_URL}/users/${encodeURIComponent(email)}`
+    );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch user');
+      throw new Error("Failed to fetch user");
     }
 
     const userData = await response.json();
     return userData;
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    throw new Error(error.message || 'Failed to fetch user');
+    console.error("Error fetching user data:", error);
+    throw new Error(error.message || "Failed to fetch user");
   }
 };

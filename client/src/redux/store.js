@@ -1,17 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import cartReducer from './slices/cartSlice';
-import wishlistReducer from './slices/wishlistSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import cartReducer from "./slices/cartSlice";
+import wishlistReducer from "./slices/wishlistSlice";
 
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // changed to use localStorage
-import { combineReducers } from 'redux';
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage"; 
+import { combineReducers } from "redux";
 
-// Persist config only for auth slice
 const persistConfig = {
-  key: 'auth',
-  storage: storage, // use localStorage
-  whitelist: ['user', 'isAuthenticated'], // only persist these
+  key: "auth",
+  storage: storage, 
+  whitelist: ["user", "isAuthenticated"], 
 };
 
 const rootReducer = combineReducers({
@@ -24,7 +23,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // needed for redux-persist
+      serializableCheck: false, 
     }),
 });
 
