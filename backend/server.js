@@ -11,6 +11,7 @@ import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import userListRoutes from "./routes/admin/userListRoutes.js";
+import adminProductRoutes from "./routes/admin/adminProductRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -28,18 +29,8 @@ app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/users", userRoutes);
 app.use("/userlist", userListRoutes); 
+app.use("/admin/products", adminProductRoutes);
 
-// // Serve frontend build
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// app.use(express.static(path.join(__dirname, "..", "client", "build")));
-
-// // Fallback for React Router
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
-// });
-
-// Start server after DB connection
 connectDB()
   .then(() => {
     const PORT = process.env.PORT || 5000;

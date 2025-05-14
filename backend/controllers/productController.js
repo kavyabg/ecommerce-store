@@ -19,23 +19,3 @@ export const getProductByProductNumber = async (req, res) => {
     res.status(500).json({ message: "Error fetching product" });
   }
 };
-
-export const createProduct = async (req, res) => {
-  const product = new Product(req.body);
-  const savedProduct = await product.save();
-  res.status(201).json(savedProduct);
-};
-
-export const updateProduct = async (req, res) => {
-  const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  if (!updated) return res.status(404).json({ message: "Product not found" });
-  res.json(updated);
-};
-
-export const deleteProduct = async (req, res) => {
-  const deleted = await Product.findByIdAndDelete(req.params.id);
-  if (!deleted) return res.status(404).json({ message: "Product not found" });
-  res.json({ message: "Product deleted successfully" });
-};
