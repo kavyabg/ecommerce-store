@@ -18,6 +18,7 @@ const UserList = () => {
                 <th className="p-3">#</th>
                 <th className="p-3">Name</th>
                 <th className="p-3">Email</th>
+                <th className="p-3">Phone</th>
               </tr>
             </thead>
             <tbody>
@@ -27,8 +28,9 @@ const UserList = () => {
                   className="hover:bg-blue-100 transition-all text-gray-800"
                 >
                   <td className="p-3">{i + 1}</td>
-                  <td className="p-3">{user.name}</td>
+                  <td className="p-3">{user.username}</td>
                   <td className="p-3">{user.email}</td>
+                  <td className="p-3">{user.phone}</td>
                 </tr>
               ))}
             </tbody>

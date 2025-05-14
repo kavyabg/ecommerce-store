@@ -3,6 +3,6 @@ import { userList } from '../../controllers/admin/userListController.js';
 
 const router = express.Router();
 
-router.get("/userlist", userList);
+router.get("/", userList);
 
 export default router;
