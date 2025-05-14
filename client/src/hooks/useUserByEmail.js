@@ -24,7 +24,7 @@ export const useUserByEmail = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [user?.email]);
 
   return { userData, loading, error };
 };

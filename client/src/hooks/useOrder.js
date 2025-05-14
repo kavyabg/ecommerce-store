@@ -25,7 +25,7 @@ const useOrdersByEmail = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [user?.email]);
 
   return { orders, loading, error };
 };
