@@ -3,7 +3,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export const fetchUserLists = async () => {
   try {
     const response = await fetch(`${BASE_URL}/userlist`);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -20,12 +20,14 @@ export const fetchUserLists = async () => {
 export const fetchProducts = async (page = 1, limit = 10) => {
   try {
     // Append the page and limit parameters to the API URL for pagination
-    const response = await fetch(`${BASE_URL}/products?page=${page}&limit=${limit}`);
+    const response = await fetch(
+      `${BASE_URL}/products?page=${page}&limit=${limit}`
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data;  // Data includes products, totalProducts, totalPages, currentPage
+    return data; // Data includes products, totalProducts, totalPages, currentPage
   } catch (error) {
     console.error("Error fetching products:", error);
     throw new Error("Failed to fetch products.");

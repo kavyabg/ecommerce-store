@@ -7,7 +7,7 @@ import {
 } from "../../services/admin/api.js";
 
 export const useProductCRUD = () => {
-  const [products, setProducts] = useState([]);  // Ensure it's initialized as an empty array
+  const [products, setProducts] = useState([]); // Ensure it's initialized as an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,11 +15,11 @@ export const useProductCRUD = () => {
     setLoading(true);
     try {
       const data = await fetchAllProducts();
-      setProducts(data || []);  // Ensure data is always an array
+      setProducts(data || []); // Ensure data is always an array
       setError(null);
     } catch (err) {
       setError(err.message);
-      setProducts([]);  // Set an empty array in case of error
+      setProducts([]); // Set an empty array in case of error
     } finally {
       setLoading(false);
     }
