@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useProductCRUD } from "../../hooks/admin/useProductCRUD";
+
+const PRODUCTS_PER_PAGE = 10;
 
 const AdminProduct = () => {
   const {
@@ -24,14 +27,16 @@ const AdminProduct = () => {
   const [editingId, setEditingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [initialLoaded, setInitialLoaded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const loadData = async () => {
       await fetchProducts();
-      setInitialLoaded(true); // Only mark as loaded after first fetch
+      setInitialLoaded(true);
     };
     loadData();
-  }, [fetchProducts]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -55,7 +60,7 @@ const AdminProduct = () => {
       });
       setEditingId(null);
       setShowModal(false);
-      await fetchProducts(); // Refresh after saving
+      await fetchProducts();
     } catch (err) {
       console.error(err);
       alert("Failed to save product");
@@ -72,7 +77,7 @@ const AdminProduct = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         await deleteProduct(id);
-        await fetchProducts(); // Refresh after delete
+        await fetchProducts();
       } catch (err) {
         console.error(err);
         alert("Failed to delete product");
@@ -85,6 +90,16 @@ const AdminProduct = () => {
       field.toLowerCase().includes(search.toLowerCase())
     )
   );
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
 
   return (
     <div className="p-6">
@@ -101,7 +116,7 @@ const AdminProduct = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
           onClick={() => {
             setForm({
               productNumber: "",
@@ -115,7 +130,7 @@ const AdminProduct = () => {
             setShowModal(true);
           }}
         >
-          Add Product
+          <FaPlus /> Add Product
         </button>
       </div>
 
@@ -130,7 +145,7 @@ const AdminProduct = () => {
           <p className="text-red-600">{error}</p>
         ) : (
           <>
-            {loading && (
+            {loading && initialLoaded && (
               <p className="text-sm text-gray-500 italic mb-2">
                 Refreshing products...
               </p>
@@ -147,19 +162,21 @@ const AdminProduct = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.length === 0 ? (
+                {paginatedProducts.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center p-3">
                       No products available.
                     </td>
                   </tr>
                 ) : (
-                  filteredProducts.map((product, i) => (
+                  paginatedProducts.map((product, i) => (
                     <tr
                       key={product._id}
                       className="hover:bg-blue-50 transition-all"
                     >
-                      <td className="p-3">{i + 1}</td>
+                      <td className="p-3">
+                        {(currentPage - 1) * PRODUCTS_PER_PAGE + i + 1}
+                      </td>
                       <td className="p-3">{product.productNumber}</td>
                       <td className="p-3">{product.name}</td>
                       <td className="p-3">${product.price}</td>
@@ -169,13 +186,13 @@ const AdminProduct = () => {
                           className="text-blue-600 hover:underline"
                           onClick={() => handleEdit(product)}
                         >
-                          Edit
+                          <FaEdit className="inline mr-1" /> Edit
                         </button>
                         <button
                           className="text-red-600 hover:underline"
                           onClick={() => handleDelete(product._id)}
                         >
-                          Delete
+                          <FaTrash className="inline mr-1" /> Delete
                         </button>
                       </td>
                     </tr>
@@ -183,10 +200,42 @@ const AdminProduct = () => {
                 )}
               </tbody>
             </table>
+
+            {/* ✅ Pagination */}
+            <div className="mt-4 flex justify-center items-center gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded border disabled:opacity-50"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handlePageChange(idx + 1)}
+                  className={`px-3 py-1 rounded border ${
+                    currentPage === idx + 1
+                      ? "bg-blue-600 text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded border disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
           </>
         )}
       </div>
 
+      {/* ✅ Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white rounded-xl p-8 w-full max-w-2xl shadow-xl relative">
