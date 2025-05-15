@@ -26,7 +26,7 @@ A modern and responsive eCommerce web application built with **React**, **Redux 
 
 ---
 
-![image](https://github.com/user-attachments/assets/ad174383-41fb-4bc2-9c0a-605cfff48a48)
+![image](https://github.com/user-attachments/assets/594fd021-b55b-4b2f-80aa-149fb9e2a1d7)
 ![image](https://github.com/user-attachments/assets/ea81c7b9-5fe7-440e-804a-e776cace710f)
 ![image](https://github.com/user-attachments/assets/74150131-fee3-4db5-97dd-52663dfcce50)
 ![image](https://github.com/user-attachments/assets/059267e5-dd58-419a-b5e4-cae7234aa679)
