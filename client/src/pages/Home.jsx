@@ -19,7 +19,7 @@ function Home() {
   return (
     <div className="bg-white text-gray-800">
       {/* Hero Section */}
-<section className="relative w-full h-[600px] overflow-hidden">
+<section className="relative w-full h-[250px] md:h-[400px] lg:h-[600px] overflow-hidden">
   <img
     src="/Hero-section-blossom.png"
     alt="Blossom Beauty Hero"
@@ -29,7 +29,7 @@ function Home() {
 
   {/* ⬇️ Small, elegant box in bottom-left corner */}
 <div
-  className="absolute bg-white/20 backdrop-blur-md text-gray-800 rounded-2xl shadow-xl p-6 max-w-md w-full sm:w-fit sm:h-fit z-10"
+  className="absolute bg-white/20 backdrop-blur-md text-gray-800 rounded-2xl shadow-xl p-6 max-w-md w-full sm:w-fit sm:h-fit z-10 lg:block hidden"
   style={{ bottom: '80px', right: '90px' }}
 >
   <h1 className="text-2xl font-bold mb-2">Welcome to Blossom Beauty</h1>
@@ -46,8 +46,8 @@ function Home() {
 </section>
 
       {/* Featured Products Section */}
-      <section className="py-16 px-4 md:px-12 bg-gray-50" id="FeaturedProducts">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
+      <section className="py-12 md:px-12 bg-gray-50" id="FeaturedProducts">
+        <h2 className="lg:text-4xl text-3xl font-bold text-center text-gray-800 mb-8">
           Featured Products
         </h2>
         <ProductList products={products} loading={loading} />
