@@ -1,4 +1,4 @@
-import { HiFolderAdd } from "react-icons/hi"; 
+import { HiFolderAdd } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useProductCRUD } from "../../hooks/admin/useProductCRUD";
@@ -135,7 +135,6 @@ const AdminProduct = () => {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-lg">
         {!initialLoaded ? (
           <div className="space-y-4 animate-pulse">
             {[...Array(5)].map((_, i) => (
@@ -151,57 +150,58 @@ const AdminProduct = () => {
                 Refreshing products...
               </p>
             )}
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-gray-100 text-gray-700 text-sm">
-                  <th className="p-3">#</th>
-                  <th className="p-3">Number</th>
-                  <th className="p-3">Name</th>
-                  <th className="p-3">Price</th>
-                  <th className="p-3">Stock</th>
-                  <th className="p-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedProducts.length === 0 ? (
+            <div className="overflow-x-auto bg-white shadow-md rounded-xl">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-gray-100 text-gray-700 text-sm">
                   <tr>
-                    <td colSpan="6" className="text-center p-3">
-                      No products available.
-                    </td>
+                    <th className="p-3">#</th>
+                    <th className="p-3">Number</th>
+                    <th className="p-3">Name</th>
+                    <th className="p-3">Price</th>
+                    <th className="p-3">Stock</th>
+                    <th className="p-3">Actions</th>
                   </tr>
-                ) : (
-                  paginatedProducts.map((product, i) => (
-                    <tr
-                      key={product._id}
-                      className="hover:bg-blue-50 transition-all"
-                    >
-                      <td className="p-3">
-                        {(currentPage - 1) * PRODUCTS_PER_PAGE + i + 1}
-                      </td>
-                      <td className="p-3">{product.productNumber}</td>
-                      <td className="p-3">{product.name}</td>
-                      <td className="p-3">${product.price}</td>
-                      <td className="p-3">{product.stock}</td>
-                      <td className="p-3 space-x-2">
-                        <button
-                          className="text-yellow-600 hover:underline"
-                          onClick={() => handleEdit(product)}
-                        >
-                          <FaEdit className="inline mr-1" />
-                        </button>
-                        <button
-                          className="text-red-600 hover:underline"
-                          onClick={() => handleDelete(product._id)}
-                        >
-                          <FaTrash className="inline mr-1" />
-                        </button>
+                </thead>
+                <tbody>
+                  {paginatedProducts.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="p-3 text-center">
+                        No products available.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-
+                  ) : (
+                    paginatedProducts.map((product, i) => (
+                      <tr
+                        key={product._id}
+                        className="border-t hover:bg-gray-50 transition-all"
+                      >
+                        <td className="p-3">
+                          {(currentPage - 1) * PRODUCTS_PER_PAGE + i + 1}
+                        </td>
+                        <td className="p-3">{product.productNumber}</td>
+                        <td className="p-3">{product.name}</td>
+                        <td className="p-3">${product.price}</td>
+                        <td className="p-3">{product.stock}</td>
+                        <td className="p-3 space-x-2">
+                          <button
+                            className="text-blue-600 hover:text-blue-800"
+                            onClick={() => handleEdit(product)}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-800"
+                            onClick={() => handleDelete(product._id)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
             {/* ✅ Pagination */}
             <div className="mt-4 flex justify-center items-center gap-2">
               <button
@@ -234,7 +234,6 @@ const AdminProduct = () => {
             </div>
           </>
         )}
-      </div>
 
       {/* ✅ Modal */}
       {showModal && (
