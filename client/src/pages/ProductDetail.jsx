@@ -50,14 +50,14 @@ function ProductDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-6 bg-white shadow-2xl rounded-3xl p-6 sm:p-8">
+    <div className="max-w-7xl mx-auto sm:px-4 lg:px-4 py-6 sm:py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 bg-white shadow-2xl rounded-3xl p-5 sm:p-8 lg:p-12">
         {/* Product Image */}
         <div className="relative group w-full">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-[350px] sm:h-[450px] object-contain p-3 rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-[300px] sm:h-[400px] md:h-[450px] object-contain p-3 rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute top-4 left-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
             NEW
@@ -65,21 +65,21 @@ function ProductDetail() {
         </div>
 
         {/* Product Info */}
-        <div className="flex flex-col space-y-6 lg:space-y-4">
+        <div className="flex flex-col justify-between space-y-6 sm:space-y-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 mb-3">
               {product.name}
             </h2>
-            <p className="text-gray-600 leading-relaxed text-lg sm:text-xl lg:text-lg lg:leading-normal">
+            <p className="text-gray-600 leading-relaxed text-base sm:text-lg md:text-xl">
               {product.description}
             </p>
           </div>
 
-          <div className="text-2xl sm:text-3xl font-bold text-gray-700">
+          <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-700">
             ₹{product.price.toFixed(2)}
           </div>
 
-          <div className="flex items-center gap-4 mt-4">
+          <div className="flex flex-wrap items-center gap-4 mt-2">
             {/* Wishlist Button */}
             <button
               onClick={() => dispatch(toggleWishlist(product))}
@@ -96,13 +96,13 @@ function ProductDetail() {
               <>
                 <button
                   disabled
-                  className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-medium flex items-center gap-2 shadow-md cursor-not-allowed"
+                  className="bg-green-500 text-white px-5 py-2 rounded-full text-base sm:text-lg font-medium flex items-center gap-2 shadow-md cursor-not-allowed"
                 >
-                  <FaCheckCircle /> Already in Cart
+                  <FaCheckCircle /> In Cart
                 </button>
                 <Link
                   to="/cart"
-                  className="text-blue-600 font-medium hover:underline text-lg"
+                  className="text-blue-600 font-medium hover:underline text-sm sm:text-base"
                 >
                   View Cart
                 </Link>
@@ -110,14 +110,17 @@ function ProductDetail() {
             ) : (
               <button
                 onClick={() => addToCart(product)}
-                className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-full text-lg font-semibold flex items-center gap-2 shadow-md hover:bg-yellow-300 transition"
+                className="bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-5 py-2 sm:px-6 sm:py-3 rounded-full text-base sm:text-lg font-semibold flex items-center gap-2 shadow-md transition"
               >
                 <FaShoppingCart /> Add to Cart
               </button>
             )}
           </div>
 
-          <Link to="/" className="mt-6 text-sm text-gray-500 hover:underline">
+          <Link
+            to="/"
+            className="mt-6 text-sm text-gray-500 hover:underline inline-block"
+          >
             ← Continue Shopping
           </Link>
         </div>
