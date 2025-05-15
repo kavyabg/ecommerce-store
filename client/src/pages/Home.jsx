@@ -17,39 +17,40 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-white text-gray-800">
       {/* Hero Section */}
-      <section className="relative bg-blue-900 text-white py-16 px-8 text-center h-[80vh] flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-70"
-          style={{
-            backgroundImage: "url(https://picsum.photos/1200/600?random=1)",
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gray-800 opacity-50"></div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-5xl font-semibold mb-4 text-shadow-md">
-            Welcome to Our Store
-          </h1>
-          <p className="text-xl mb-6 text-shadow-md">
-            Discover the finest beauty essentials and irresistible deals
-          </p>
-          <a
-            href="/#FeaturedProducts"
-            className="inline-block bg-yellow-500 text-blue-900 py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 transform hover:scale-105"
-          >
-            Shop Now
-          </a>
-        </div>
-      </section>
+<section className="relative w-full h-[600px] overflow-hidden">
+  <img
+    src="/Hero-section-blossom.png"
+    alt="Blossom Beauty Hero"
+    className="absolute inset-0 object-cover w-full h-full"
+  />
+  <div className="absolute inset-0 bg-black/10"></div>
+
+  {/* ⬇️ Small, elegant box in bottom-left corner */}
+<div
+  className="absolute bg-white/20 backdrop-blur-md text-gray-800 rounded-2xl shadow-xl p-6 max-w-md w-full sm:w-fit sm:h-fit z-10"
+  style={{ bottom: '80px', right: '90px' }}
+>
+  <h1 className="text-2xl font-bold mb-2">Welcome to Blossom Beauty</h1>
+  <p className="text-base text-gray-600 mb-4">
+    Discover elegant, nature-inspired beauty products curated just for you.
+  </p>
+  <a
+    href="/#FeaturedProducts"
+    className="inline-block bg-pink-400 text-white font-semibold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105"
+  >
+    Shop Now
+  </a>
+</div>
+</section>
 
       {/* Featured Products Section */}
-      <section className="py-12 bg-gray-50" id="FeaturedProducts">
-        <h2 className="text-4xl text-center font-semibold mb-8">
+      <section className="py-16 px-4 md:px-12 bg-gray-50" id="FeaturedProducts">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
           Featured Products
         </h2>
-        <ProductList products={products} loading={loading} />{" "}
-        {/* ✅ Use loading */}
+        <ProductList products={products} loading={loading} />
       </section>
     </div>
   );

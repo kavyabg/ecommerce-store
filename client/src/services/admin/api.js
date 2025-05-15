@@ -37,7 +37,7 @@ export const fetchProducts = async (page = 1, limit = 10) => {
 // Create a Product
 export const createProduct = async (product) => {
   try {
-    const response = await fetch(`${BASE_URL}/products`, {
+    const response = await fetch(`${BASE_URL}/admin/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product),
@@ -55,7 +55,7 @@ export const createProduct = async (product) => {
 // Update a Product
 export const updateProduct = async (id, updatedProduct) => {
   try {
-    const response = await fetch(`${BASE_URL}/products/${id}`, {
+    const response = await fetch(`${BASE_URL}/admin/products/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedProduct),
@@ -73,7 +73,7 @@ export const updateProduct = async (id, updatedProduct) => {
 // Delete a Product
 export const deleteProduct = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/products/${id}`, {
+    const response = await fetch(`${BASE_URL}/admin/products/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {

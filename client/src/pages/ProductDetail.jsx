@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../components/CartContext";
@@ -58,7 +57,7 @@ function ProductDetail() {
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-[350px] sm:h-[450px] object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-[350px] sm:h-[450px] object-contain p-3 rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute top-4 left-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
             NEW
@@ -84,10 +83,8 @@ function ProductDetail() {
             {/* Wishlist Button */}
             <button
               onClick={() => dispatch(toggleWishlist(product))}
-              className={`text-xl p-3 rounded-full shadow-md ${
-                isInWishlist
-                  ? "text-red-500 bg-red-100"
-                  : "text-blue-900 bg-yellow-400"
+              className={`text-2xl p-3 ${
+                isInWishlist ? "text-red-500" : "text-blue-900"
               } hover:scale-110 transition`}
               title={isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
             >

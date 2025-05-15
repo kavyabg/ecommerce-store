@@ -30,7 +30,7 @@ function ProductList({ products, loading }) {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
+                  className="w-full h-48 object-contain rounded-t-lg p-3"
                 />
               </Link>
               <div className="p-4">
@@ -45,7 +45,7 @@ function ProductList({ products, loading }) {
                     ₹{product.price}
                   </span>
                   <Link to={`/product/${product.productNumber}`}>
-                    <button className="bg-yellow-500 text-blue-900 py-2 px-4 rounded-full hover:bg-yellow-400 transition duration-300">
+                    <button className="bg-yellow-500 text-black py-2 px-4 rounded-full hover:bg-yellow-400 transition duration-300">
                       View Details
                     </button>
                   </Link>
