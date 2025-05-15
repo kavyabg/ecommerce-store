@@ -1,5 +1,6 @@
+import { HiFolderAdd } from "react-icons/hi"; 
 import { useEffect, useState } from "react";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useProductCRUD } from "../../hooks/admin/useProductCRUD";
 
 const PRODUCTS_PER_PAGE = 10;
@@ -130,7 +131,7 @@ const AdminProduct = () => {
             setShowModal(true);
           }}
         >
-          <FaPlus /> Add Product
+          <HiFolderAdd className="text-3xl" /> Add Product
         </button>
       </div>
 
@@ -183,16 +184,16 @@ const AdminProduct = () => {
                       <td className="p-3">{product.stock}</td>
                       <td className="p-3 space-x-2">
                         <button
-                          className="text-blue-600 hover:underline"
+                          className="text-yellow-600 hover:underline"
                           onClick={() => handleEdit(product)}
                         >
-                          <FaEdit className="inline mr-1" /> Edit
+                          <FaEdit className="inline mr-1" />
                         </button>
                         <button
                           className="text-red-600 hover:underline"
                           onClick={() => handleDelete(product._id)}
                         >
-                          <FaTrash className="inline mr-1" /> Delete
+                          <FaTrash className="inline mr-1" />
                         </button>
                       </td>
                     </tr>

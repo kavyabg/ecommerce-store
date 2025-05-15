@@ -30,7 +30,8 @@ import SessionManager from "./components/SessionManager";
 // Admin layout and pages
 import AdminLayout from "./components/admin/AdminLayout";
 import UserList from "./components/admin/UserList";
-import AdminProducts from "./components/admin/AdminProducts"
+import AdminProducts from "./components/admin/AdminProducts";
+import AdminOrders from "./components/admin/AdminOrders";
 
 // Layout for non-admin pages
 const Layout = ({ children }) => {
@@ -116,6 +117,7 @@ function App() {
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="users" element={<UserList />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="orders" element={<AdminOrders />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

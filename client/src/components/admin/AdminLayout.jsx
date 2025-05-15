@@ -1,19 +1,21 @@
 // src/admin/AdminLayout.jsx
 import { Outlet, useNavigate } from "react-router-dom";
 import {
-  FaTachometerAlt,
   FaUsers,
   FaBoxes,
   FaSignOutAlt,
+  FaShippingFast
 } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md"; 
 
 const AdminLayout = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { label: "Dashboard", icon: <FaTachometerAlt />, path: "/admin/dashboard" },
+    { label: "Dashboard", icon: <MdSpaceDashboard />, path: "/admin/dashboard" },
     { label: "Users", icon: <FaUsers />, path: "/admin/users" },
     { label: "Products", icon: <FaBoxes />, path: "/admin/products" },
+    { label: "Orders", icon: <FaShippingFast />, path: "/admin/orders" },
   ];
 
   const handleLogout = () => {
