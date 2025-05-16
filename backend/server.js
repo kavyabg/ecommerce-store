@@ -1,8 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 import { connectDB } from "./config/db.js";
 
 // Routes
@@ -12,6 +10,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import userListRoutes from "./routes/admin/userListRoutes.js";
 import adminProductRoutes from "./routes/admin/adminProductRoutes.js";
+import adminOrderRoutes from "./routes/admin/adminOrderRoutes.js"
 
 dotenv.config();
 const app = express();
@@ -30,6 +29,7 @@ app.use("/orders", orderRoutes);
 app.use("/users", userRoutes);
 app.use("/userlist", userListRoutes); 
 app.use("/admin/products", adminProductRoutes);
+app.use("/admin/orders", adminOrderRoutes);
 
 connectDB()
   .then(() => {
