@@ -31,7 +31,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white shadow">
-        <h1 className="text-2xl font-bold text-pink-600">BlossomBeauty</h1>
+        <h1 className="text-2xl font-bold text-pink-600">Dashboard</h1>
         <button onClick={() => setSidebarOpen(!sidebarOpen)}>
           {sidebarOpen ? (
             <FaTimes className="text-2xl" />
@@ -56,7 +56,7 @@ export default function Dashboard() {
             <NavItem to="/profile" icon={<FaUserCircle />} label="Profile" />
             <NavItem to="/my-orders" icon={<FaBox />} label="Orders" />
             <NavItem to="/cart" icon={<FaShoppingCart />} label="Cart" />
-            <NavItem to="/wishlists" icon={<FaHeart />} label="Favourites" />
+            <NavItem to="/wishlists" icon={<FaHeart />} label="Wishlist" />
           </nav>
         </div>
         <button
@@ -113,7 +113,7 @@ export default function Dashboard() {
                 View and adjust your current shopping list.
               </Card>
               <Card
-                title="Favourites"
+                title="Wishlists"
                 icon={<FaHeart className="text-red-400" />}
               >
                 View and manage your saved products.

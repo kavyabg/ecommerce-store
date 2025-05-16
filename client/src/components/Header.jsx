@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { CgClose } from "react-icons/cg";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -12,7 +13,6 @@ import {
   FaUser,
   FaBox,
 } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
@@ -24,6 +24,33 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const desktopDropdownRef = useRef(null);
+  const mobileDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // If dropdown is open, and click is outside both dropdown refs, close it
+      if (
+        showDropdown &&
+        !(
+          (desktopDropdownRef.current &&
+            desktopDropdownRef.current.contains(event.target)) ||
+          (mobileDropdownRef.current &&
+            mobileDropdownRef.current.contains(event.target))
+        )
+      ) {
+        setShowDropdown(false);
+      }
+    }
+
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -84,12 +111,11 @@ function Header() {
                 </Link>
               </>
             ) : (
-              <div className="relative">
+              <div className="relative" ref={desktopDropdownRef}>
                 <button
                   onClick={() => setShowDropdown((prev) => !prev)}
                   className="flex items-center text-yellow-300 font-medium hover:text-white transition duration-200"
                 >
-                  {/* Avatar Image */}
                   <img
                     src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.username}`}
                     alt="avatar"
@@ -153,36 +179,38 @@ function Header() {
             )}
           </nav>
 
-          {/* Mobile Menu Icon */}
-          <div className="md:hidden flex items-center ml-2">
-            <button
-              onClick={toggleMenu}
-              className="text-white text-2xl focus:outline-none"
-            >
-              {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-            </button>
-          </div>
+          <div className="flex gap-2">
+            {/* Cart Icon */}
+            <div className="relative ml-1">
+              <Link
+                to="/cart"
+                className="text-white text-2xl hover:text-yellow-300 transition"
+              >
+                <FaCartShopping size={28} />
+              </Link>
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
 
-          {/* Cart Icon */}
-          <div className="relative ml-1">
-            <Link
-              to="/cart"
-              className="text-white text-2xl hover:text-yellow-300 transition"
-            >
-              <FaCartShopping size={28} />
-            </Link>
-            {cartCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
+            {/* Mobile Menu Icon */}
+            <div className="md:hidden flex items-center ml-2">
+              <button
+                onClick={toggleMenu}
+                className="text-white text-xl focus:outline-none"
+              >
+                {mobileMenuOpen ? <CgClose className="text-2xl" /> : <FaBars />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Nav */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-blue-600 px-6 pb-4 space-y-3">
+        <div className="md:hidden bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-4 space-y-3">
           <Link
             onClick={closeMenu}
             to="/"
@@ -223,10 +251,75 @@ function Header() {
               </Link>
             </>
           ) : (
-            <div className="flex items-center text-white font-medium space-x-2">
-              <FaUser className="text-yellow-300" />
-              <span>{user?.email}</span>
-            </div>
+            <>
+              <div ref={mobileDropdownRef}>
+                <div
+                  className="flex items-center justify-between text-white font-medium space-x-2 cursor-pointer"
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                >
+                  <div className="flex items-center space-x-2">
+                    <img
+                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.username}`}
+                      alt="avatar"
+                      className="w-8 h-8 rounded-full border-2 border-yellow-400 shadow-md"
+                    />
+                    <span className="capitalize">{user?.username}</span>
+                  </div>
+                  <IoMdArrowDropdown
+                    className={`w-6 h-6 transition-transform duration-300 ${
+                      showDropdown ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
+
+                {showDropdown && (
+                  <div className="mt-1 bg-white text-gray-800 rounded-md shadow-md overflow-hidden">
+                    <Link
+                      to="/profile"
+                      onClick={closeMenu}
+                      className="block px-4 py-2 text-sm hover:bg-yellow-50 flex items-center gap-2"
+                    >
+                      <FaUser className="text-gray-600" />
+                      Profile
+                    </Link>
+                    <Link
+                      to="/cart"
+                      onClick={closeMenu}
+                      className="block px-4 py-2 text-sm hover:bg-yellow-50 flex items-center gap-2"
+                    >
+                      <FaCartShopping className="text-gray-600" />
+                      My Cart
+                    </Link>
+                    <Link
+                      to="/my-orders"
+                      onClick={closeMenu}
+                      className="block px-4 py-2 text-sm hover:bg-yellow-50 flex items-center gap-2"
+                    >
+                      <FaBox className="text-gray-600" />
+                      My Orders
+                    </Link>
+                    <Link
+                      to="/wishlists"
+                      onClick={closeMenu}
+                      className="block px-4 py-2 text-sm hover:bg-yellow-50 flex items-center gap-2"
+                    >
+                      <MdFavorite className="text-gray-600" />
+                      My Favorites
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        closeMenu();
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-yellow-50 flex items-center gap-2"
+                    >
+                      <IoLogOut className="text-gray-600" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       )}
