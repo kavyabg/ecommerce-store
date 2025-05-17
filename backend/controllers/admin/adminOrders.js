@@ -26,3 +26,38 @@ export const getAdminOrders = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch orders", error: error.message });
   }
 };
+
+export const updateAdminOrder = async (req, res) => {
+  const { id } = req.params;
+  const {
+    status,
+    paymentStatus,
+    shippedDate,
+    estimatedDeliveryDate,
+    deliveredDate,
+  } = req.body;
+
+  try {
+    // Build update data object based on provided fields
+    const updateData = {};
+    if (status) updateData.status = status;
+    if (paymentStatus) updateData.paymentStatus = paymentStatus;
+    if (shippedDate) updateData.shippedDate = new Date(shippedDate);
+    if (estimatedDeliveryDate) updateData.estimatedDeliveryDate = new Date(estimatedDeliveryDate);
+    if (deliveredDate) updateData.deliveredDate = new Date(deliveredDate);
+
+    const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
+      new: true, // Return the updated document
+      runValidators: true, // Enforce schema validation
+    });
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.json({ message: "Order updated successfully", order: updatedOrder });
+  } catch (error) {
+    console.error("Update Admin Order Error:", error);
+    res.status(500).json({ message: "Failed to update order", error: error.message });
+  }
+};

@@ -101,3 +101,26 @@ export const fetchOrders = async (page = 1, limit = 10) => {
     throw new Error("Failed to fetch orders.");
   }
 };
+
+export const updateOrder = async (orderId, updatedFields) => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/orders/${orderId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedFields),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data; // Contains message and updated order
+  } catch (error) {
+    console.error("Error updating order:", error);
+    throw new Error("Failed to update order.");
+  }
+};

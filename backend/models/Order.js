@@ -28,6 +28,15 @@ const OrderSchema = new mongoose.Schema(
       enum: ["Paid", "Unpaid"],
       default: "Unpaid",
     },
+    shippedDate: {
+      type: Date,
+    },
+    estimatedDeliveryDate: {
+      type: Date,
+    },
+    deliveredDate: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

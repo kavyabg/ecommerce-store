@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchOrders } from "../../services/admin/api.js";
+import { fetchOrders, updateOrder } from "../../services/admin/api.js";
 
 export function useAdminOrders(page = 1, limit = 10) {
   const [orders, setOrders] = useState([]);
@@ -9,8 +9,15 @@ export function useAdminOrders(page = 1, limit = 10) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [updating, setUpdating] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+  const [updateSuccess, setUpdateSuccess] = useState(null);
+
+  // Fetch Orders
   useEffect(() => {
     const getOrders = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const data = await fetchOrders(currentPage, limit);
         if (!data || data.orders.length === 0) {
@@ -32,13 +39,44 @@ export function useAdminOrders(page = 1, limit = 10) {
     getOrders();
   }, [currentPage, limit]);
 
+  // Update Order
+  const handleUpdateOrder = async (orderId, updatedFields) => {
+    setUpdating(true);
+    setUpdateError(null);
+    setUpdateSuccess(null);
+
+    try {
+      const response = await updateOrder(orderId, updatedFields);
+      setUpdateSuccess(response.message || "Order updated successfully.");
+
+      // Optional: update local state
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderId ? { ...order, ...response.updatedOrder } : order
+        )
+      );
+
+      return response.updatedOrder;
+    } catch (error) {
+      console.error("Error updating order:", error);
+      setUpdateError(error.message || "Failed to update order.");
+    } finally {
+      setUpdating(false);
+    }
+  };
+
   return {
     orders,
+    setOrders,
     totalOrders,
     totalPages,
     currentPage,
     setCurrentPage,
     loading,
     error,
+    updating,
+    updateError,
+    updateSuccess,
+    updateOrder: handleUpdateOrder,
   };
 }
