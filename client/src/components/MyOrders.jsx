@@ -3,21 +3,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import React, { useState } from "react";
 import useOrdersByEmail from "../hooks/useOrder";
 import { Link } from "react-router-dom";
-
-// Dummy API update (replace with real API call)
-const updateOrderStatus = async (orderId, status) => {
-  try {
-    const res = await fetch(`/api/orders/${orderId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    return res.ok;
-  } catch (error) {
-    console.error("Failed to update order status", error);
-    return false;
-  }
-};
+import { useAdminOrders } from "../hooks/admin/useAdminOrders";
 
 const formatDate = (dateStr) =>
   new Date(dateStr).toLocaleDateString("en-US", {
@@ -44,26 +30,30 @@ const MyOrders = () => {
   const [selectedDate, setSelectedDate] = useState("all");
   const [showModal, setShowModal] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
+  const { updateOrder } = useAdminOrders();
+
 
   const handleCancelClick = (order) => {
     setOrderToCancel(order);
     setShowModal(true);
   };
 
-  const confirmCancellation = async () => {
-    if (!orderToCancel) return;
-    const success = await updateOrderStatus(
-      orderToCancel._id,
-      "Pending Cancellation"
-    );
-    if (success) {
-      setShowModal(false);
-      setOrderToCancel(null);
-      refetch();
-    } else {
-      alert("Failed to cancel order.");
-    }
-  };
+const confirmCancellation = async () => {
+  if (!orderToCancel) return;
+
+  try {
+    await updateOrder(orderToCancel._id, {
+      status: "Pending Cancellation",
+    });
+
+    setShowModal(false);
+    setOrderToCancel(null);
+    refetch();
+  } catch (error) {
+    // alert("Failed to cancel order.");
+    console.error("Cancellation error:", error.message);
+  }
+};
 
   const uniqueDates = Array.from(
     new Set(orders.map((order) => formatDate(order.createdAt)))

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getOrdersByEmail } from "../services/api";
 import { useSelector } from "react-redux";
 
@@ -8,26 +8,29 @@ const useOrdersByEmail = () => {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        if (!user?.email) {
-          throw new Error("User email not found in localStorage");
-        }
-
-        const orderData = await getOrdersByEmail(user.email);
-        setOrders(orderData);
-      } catch (err) {
-        setError(err.message || "Failed to fetch orders");
-      } finally {
-        setLoading(false);
+  // useCallback to memoize fetchOrders function
+  const fetchOrders = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      if (!user?.email) {
+        throw new Error("User email not found");
       }
-    };
 
-    fetchOrders();
+      const orderData = await getOrdersByEmail(user.email);
+      setOrders(orderData);
+    } catch (err) {
+      setError(err.message || "Failed to fetch orders");
+    } finally {
+      setLoading(false);
+    }
   }, [user?.email]);
 
-  return { orders, loading, error };
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
+  return { orders, loading, error, refetch: fetchOrders };
 };
 
 export default useOrdersByEmail;
