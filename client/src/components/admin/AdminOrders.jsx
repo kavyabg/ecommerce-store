@@ -26,6 +26,8 @@ const AdminOrders = () => {
     estimatedDeliveryDate: "",
     deliveredDate: "",
   });
+  const [formErrors, setFormErrors] = useState({});
+  const [filterStatus, setFilterStatus] = useState("All");
 
   const handleEditClick = (order) => {
     setSelectedOrder(order);
@@ -36,56 +38,48 @@ const AdminOrders = () => {
       estimatedDeliveryDate: order.estimatedDeliveryDate
         ? order.estimatedDeliveryDate.split("T")[0]
         : "",
-      deliveredDate: order.deliveredDate
-        ? order.deliveredDate.split("T")[0]
-        : "",
+      deliveredDate: order.deliveredDate ? order.deliveredDate.split("T")[0] : "",
     });
+    setFormErrors({});
     setIsModalOpen(true);
   };
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+    setFormErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    const { status, shippedDate, estimatedDeliveryDate, deliveredDate } = formValues;
+
+    if (status === "Shipped" || status === "Delivered") {
+      if (!shippedDate) errors.shippedDate = "Shipped Date is required.";
+      if (!estimatedDeliveryDate) errors.estimatedDeliveryDate = "Estimated Delivery Date is required.";
+    }
+    if (status === "Delivered" && !deliveredDate) {
+      errors.deliveredDate = "Delivered Date is required.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleUpdate = async () => {
-    const { status, shippedDate, estimatedDeliveryDate, deliveredDate } =
-      formValues;
-
-    if (
-      (status === "Shipped" || status === "Delivered") &&
-      (!shippedDate || !estimatedDeliveryDate)
-    ) {
-      alert(
-        "Shipped Date and Estimated Delivery Date are required for Shipped or Delivered status."
-      );
-      return;
-    }
-
-    if (status === "Delivered" && !deliveredDate) {
-      alert("Delivered Date is required for Delivered status.");
-      return;
-    }
-
+    if (!validateForm()) return;
     if (!selectedOrder) return;
 
     const updated = await updateOrder(selectedOrder._id, formValues);
-
     if (updated && updated._id) {
-      // Normalize dates before setting state to ensure UI renders correctly
       const normalizedOrder = {
         ...updated,
-        shippedDate: updated.shippedDate
-          ? updated.shippedDate.split("T")[0]
-          : "",
+        shippedDate: updated.shippedDate ? updated.shippedDate.split("T")[0] : "",
         estimatedDeliveryDate: updated.estimatedDeliveryDate
           ? updated.estimatedDeliveryDate.split("T")[0]
           : "",
-        deliveredDate: updated.deliveredDate
-          ? updated.deliveredDate.split("T")[0]
-          : "",
+        deliveredDate: updated.deliveredDate ? updated.deliveredDate.split("T")[0] : "",
       };
-
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === updated._id ? { ...order, ...normalizedOrder } : order
@@ -95,7 +89,11 @@ const AdminOrders = () => {
     }
   };
 
-  // Status badge colors
+  const filteredOrders =
+    filterStatus === "All"
+      ? orders
+      : orders.filter((order) => order.status === filterStatus);
+
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case "Confirmed":
@@ -108,6 +106,8 @@ const AdminOrders = () => {
         return "bg-green-100 text-green-700";
       case "Cancelled":
         return "bg-red-100 text-red-700";
+      case "Pending Cancellation":
+        return "bg-orange-100 text-orange-700";
       default:
         return "bg-gray-100 text-gray-700";
     }
@@ -115,9 +115,24 @@ const AdminOrders = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        Order Management
-      </h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Order Management</h1>
+
+      <div className="flex justify-end mb-4">
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="border rounded px-3 py-2"
+          aria-label="Filter orders by status"
+        >
+          <option value="All">All</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Processing">Processing</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Pending Cancellation">Pending Cancellation</option>
+        </select>
+      </div>
 
       {loading && <p>Loading orders...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -140,14 +155,14 @@ const AdminOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.length === 0 ? (
+                {filteredOrders.length === 0 ? (
                   <tr>
                     <td colSpan="9" className="p-3 text-center">
                       No orders available.
                     </td>
                   </tr>
                 ) : (
-                  orders.map((order, index) => (
+                  filteredOrders.map((order, index) => (
                     <tr
                       key={order._id}
                       className="border-t hover:bg-gray-50 transition-all"
@@ -161,7 +176,9 @@ const AdminOrders = () => {
                       <td className="p-3">{order.transactionId}</td>
                       <td className="p-3">
                         <span
-                          className={`inline-block text-xs font-semibold px-2 py-1 rounded ${getStatusBadgeClass(order.status)}`}
+                          className={`inline-block text-xs font-semibold px-2 py-1 rounded ${getStatusBadgeClass(
+                            order.status
+                          )}`}
                         >
                           {order.status}
                         </span>
@@ -184,6 +201,7 @@ const AdminOrders = () => {
                         <button
                           className="text-yellow-600 hover:text-yellow-800"
                           onClick={() => handleEditClick(order)}
+                          aria-label={`Edit order ${order._id}`}
                         >
                           <FaEdit />
                         </button>
@@ -217,115 +235,126 @@ const AdminOrders = () => {
         </>
       )}
 
-      {/* Modal */}
-      {isModalOpen && (
+      {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg relative">
-            <h2 className="text-xl font-semibold mb-4">Edit Order</h2>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Status</label>
-              <select
-                name="status"
-                value={formValues.status}
-                onChange={handleFormChange}
-                className="w-full border rounded px-3 py-2"
-              >
-                <option value="Confirmed">Confirmed</option>
-                <option value="Processing">Processing</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Delivered">Delivered</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Pending Cancellation">Pending Cancellation</option>
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Payment Status
+            <h2 className="text-xl font-bold mb-4">Edit Order #{selectedOrder._id}</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdate();
+              }}
+              noValidate
+            >
+              <label className="block mb-2">
+                Status:
+                <select
+                  name="status"
+                  value={formValues.status}
+                  onChange={handleFormChange}
+                  className="w-full border rounded px-2 py-1"
+                >
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                  <option value="Pending Cancellation">Pending Cancellation</option>
+                </select>
               </label>
-              <select
-                name="paymentStatus"
-                value={formValues.paymentStatus}
-                onChange={handleFormChange}
-                className="w-full border rounded px-3 py-2"
-              >
-                <option value="Paid">Paid</option>
-                <option value="Unpaid">Unpaid</option>
-              </select>
-            </div>
 
-            {/* Date fields */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Shipped Date
+              <label className="block mb-2">
+                Payment Status:
+                <select
+                  name="paymentStatus"
+                  value={formValues.paymentStatus}
+                  onChange={handleFormChange}
+                  className="w-full border rounded px-2 py-1"
+                >
+                  <option value="Paid">Paid</option>
+                  <option value="Unpaid">Unpaid</option>
+                </select>
               </label>
-              <input
-                type="date"
-                name="shippedDate"
-                value={formValues.shippedDate}
-                onChange={handleFormChange}
-                required={
-                  formValues.status === "Shipped" ||
-                  formValues.status === "Delivered"
-                }
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Estimated Delivery Date
-              </label>
-              <input
-                type="date"
-                name="estimatedDeliveryDate"
-                value={formValues.estimatedDeliveryDate}
-                onChange={handleFormChange}
-                required={
-                  formValues.status === "Shipped" ||
-                  formValues.status === "Delivered"
-                }
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
+              {(formValues.status === "Shipped" || formValues.status === "Delivered") && (
+                <>
+                  <label className="block mb-2">
+                    Shipped Date:
+                    <input
+                      type="date"
+                      name="shippedDate"
+                      value={formValues.shippedDate}
+                      onChange={handleFormChange}
+                      className={`w-full border rounded px-2 py-1 ${
+                        formErrors.shippedDate ? "border-red-500" : ""
+                      }`}
+                    />
+                    {formErrors.shippedDate && (
+                      <p className="text-red-600 text-sm mt-1">{formErrors.shippedDate}</p>
+                    )}
+                  </label>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Delivered Date
-              </label>
-              <input
-                type="date"
-                name="deliveredDate"
-                value={formValues.deliveredDate}
-                onChange={handleFormChange}
-                required={formValues.status === "Delivered"}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
+                  <label className="block mb-2">
+                    Estimated Delivery Date:
+                    <input
+                      type="date"
+                      name="estimatedDeliveryDate"
+                      value={formValues.estimatedDeliveryDate}
+                      onChange={handleFormChange}
+                      className={`w-full border rounded px-2 py-1 ${
+                        formErrors.estimatedDeliveryDate ? "border-red-500" : ""
+                      }`}
+                    />
+                    {formErrors.estimatedDeliveryDate && (
+                      <p className="text-red-600 text-sm mt-1">{formErrors.estimatedDeliveryDate}</p>
+                    )}
+                  </label>
+                </>
+              )}
 
-            {updateError && (
-              <p className="text-red-500 text-sm">{updateError}</p>
-            )}
-            {updateSuccess && (
-              <p className="text-green-500 text-sm">{updateSuccess}</p>
-            )}
+              {formValues.status === "Delivered" && (
+                <label className="block mb-2">
+                  Delivered Date:
+                  <input
+                    type="date"
+                    name="deliveredDate"
+                    value={formValues.deliveredDate}
+                    onChange={handleFormChange}
+                    className={`w-full border rounded px-2 py-1 ${
+                      formErrors.deliveredDate ? "border-red-500" : ""
+                    }`}
+                  />
+                  {formErrors.deliveredDate && (
+                    <p className="text-red-600 text-sm mt-1">{formErrors.deliveredDate}</p>
+                  )}
+                </label>
+              )}
 
-            <div className="flex justify-end mt-6 space-x-3">
-              <button
-                className="px-4 py-2 bg-gray-300 rounded"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-                onClick={handleUpdate}
-                disabled={updating}
-              >
-                {updating ? "Updating..." : "Update"}
-              </button>
-            </div>
+              <div className="flex justify-end space-x-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={updating}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {updating ? "Updating..." : "Update"}
+                </button>
+              </div>
+
+              {updateError && (
+                <p className="text-red-600 mt-3 text-center">{updateError}</p>
+              )}
+
+              {updateSuccess && (
+                <p className="text-green-600 mt-3 text-center">Order updated successfully!</p>
+              )}
+            </form>
           </div>
         </div>
       )}
