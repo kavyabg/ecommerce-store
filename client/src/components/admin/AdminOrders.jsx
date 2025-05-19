@@ -202,6 +202,7 @@ const AdminOrders = () => {
                           className="text-yellow-600 hover:text-yellow-800"
                           onClick={() => handleEditClick(order)}
                           aria-label={`Edit order ${order._id}`}
+                          disabled={order.status === "Cancelled"}
                         >
                           <FaEdit />
                         </button>
