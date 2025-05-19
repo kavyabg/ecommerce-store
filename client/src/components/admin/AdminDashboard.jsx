@@ -1,34 +1,48 @@
-const AdminDashboard = () => {  
+import { FaBoxOpen, FaUsers, FaShoppingCart } from "react-icons/fa";
+
+const AdminDashboard = () => {
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 p-10">
       {/* Page Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
-        <p className="text-gray-500 mt-1">Manage your platform efficiently.</p>
-      </div>
+      <header className="mb-12 text-center text-white max-w-4xl mx-auto">
+        <h1 className="text-5xl font-extrabold tracking-tight drop-shadow-lg">
+          Dashboard Overview
+        </h1>
+        <p className="mt-3 text-xl text-indigo-200 font-light">
+          Manage your platform efficiently with real-time insights and stats.
+        </p>
+      </header>
 
       {/* Dashboard Cards */}
-      <section className="bg-white p-6 rounded-xl shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-800 mb-6">Quick Stats</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-blue-100 hover:bg-blue-200 transition-all p-5 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-blue-900 mb-1">
-              Total Products
-            </h3>
-            <p className="text-3xl font-bold text-blue-900">250</p>
-          </div>
-          <div className="bg-green-100 hover:bg-green-200 transition-all p-5 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-green-900 mb-1">
-              Total Users
-            </h3>
-            <p className="text-3xl font-bold text-green-900">1,500</p>
-          </div>
-          <div className="bg-yellow-100 hover:bg-yellow-200 transition-all p-5 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-yellow-900 mb-1">
-              Pending Orders
-            </h3>
-            <p className="text-3xl font-bold text-yellow-900">75</p>
-          </div>
+      <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Card 1: Total Products */}
+        <div className="bg-gradient-to-tr from-blue-600 to-blue-400 rounded-3xl shadow-xl transform hover:scale-105 transition-transform duration-300 cursor-pointer p-8 flex flex-col items-center text-white">
+          <FaBoxOpen className="text-6xl mb-5 drop-shadow-md" />
+          <h3 className="text-2xl font-semibold mb-2 tracking-wide">Total Products</h3>
+          <p className="text-5xl font-extrabold tracking-wider">12</p>
+          <span className="mt-3 text-blue-200 font-light text-sm uppercase tracking-wide">
+            Updated just now
+          </span>
+        </div>
+
+        {/* Card 2: Total Users */}
+        <div className="bg-gradient-to-tr from-green-600 to-green-400 rounded-3xl shadow-xl transform hover:scale-105 transition-transform duration-300 cursor-pointer p-8 flex flex-col items-center text-white">
+          <FaUsers className="text-6xl mb-5 drop-shadow-md" />
+          <h3 className="text-2xl font-semibold mb-2 tracking-wide">Total Users</h3>
+          <p className="text-5xl font-extrabold tracking-wider">4</p>
+          <span className="mt-3 text-green-200 font-light text-sm uppercase tracking-wide">
+            Active this month
+          </span>
+        </div>
+
+        {/* Card 3: Pending Orders */}
+        <div className="bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-3xl shadow-xl transform hover:scale-105 transition-transform duration-300 cursor-pointer p-8 flex flex-col items-center text-white">
+          <FaShoppingCart className="text-6xl mb-5 drop-shadow-md" />
+          <h3 className="text-2xl font-semibold mb-2 tracking-wide">Pending Orders</h3>
+          <p className="text-5xl font-extrabold tracking-wider">5</p>
+          <span className="mt-3 text-yellow-100 font-light text-sm uppercase tracking-wide">
+            Needs your attention
+          </span>
         </div>
       </section>
     </div>

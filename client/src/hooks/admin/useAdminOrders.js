@@ -40,34 +40,37 @@ export function useAdminOrders(page = 1, limit = 10) {
   }, [currentPage, limit]);
 
   // Update Order
-const handleUpdateOrder = async (orderId, updatedFields) => {
-  setUpdating(true);
-  setUpdateError(null);
-  setUpdateSuccess(null);
+  const handleUpdateOrder = async (orderId, updatedFields) => {
+    setUpdating(true);
+    setUpdateError(null);
+    setUpdateSuccess(null);
 
-  try {
-    const response = await updateOrder(orderId, updatedFields);
+    try {
+      const response = await updateOrder(orderId, updatedFields);
 
-    const updatedOrder = response?.updatedOrder || { _id: orderId, ...updatedFields };
-    const message = response?.message || "Order updated successfully.";
+      const updatedOrder = response?.updatedOrder || {
+        _id: orderId,
+        ...updatedFields,
+      };
+      const message = response?.message || "Order updated successfully.";
 
-    setUpdateSuccess(message);
+      setUpdateSuccess(message);
 
-    // Optional: update local state
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order._id === orderId ? { ...order, ...updatedOrder } : order
-      )
-    );
+      // Optional: update local state
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderId ? { ...order, ...updatedOrder } : order
+        )
+      );
 
-    return updatedOrder;
-  } catch (error) {
-    console.error("Error updating order:", error);
-    setUpdateError(error.message || "Failed to update order.");
-  } finally {
-    setUpdating(false);
-  }
-};
+      return updatedOrder;
+    } catch (error) {
+      console.error("Error updating order:", error);
+      setUpdateError(error.message || "Failed to update order.");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   return {
     orders,
